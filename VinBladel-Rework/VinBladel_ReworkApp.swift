@@ -11,7 +11,7 @@ import SwiftUI
 struct VinBladel_ReworkApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            StartPage()
         }
     }
 }

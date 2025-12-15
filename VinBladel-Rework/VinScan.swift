@@ -1,0 +1,26 @@
+//
+//  VinScan.swift
+//  VinBladel-Rework
+//
+//  Created by Aadi Shah on 12/15/25.
+//
+
+import SwiftUI
+
+struct VinScan: View {
+    var body: some View {
+        NavigationStack{
+            NavigationLink(destination: StartPage()) {
+                Text("List")
+                    .frame(width: 100, height: 50)
+                    .foregroundStyle(.black)
+                    .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
+                    .padding()
+            }
+        }
+    }
+}
+
+#Preview {
+    VinScan()
+}
