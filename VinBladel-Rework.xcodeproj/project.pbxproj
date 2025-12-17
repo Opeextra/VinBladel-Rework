@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		54C998E22EF3184F00FAB803 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 54C998E12EF3184F00FAB803 /* FirebaseDatabase */; };
 		EB55FAB72EE8891400FBB2D0 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EB55FAB62EE8891400FBB2D0 /* FirebaseFirestore */; };
 		EB55FAB92EE8891400FBB2D0 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = EB55FAB82EE8891400FBB2D0 /* FirebaseStorage */; };
 /* End PBXBuildFile section */
@@ -28,6 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54C998E22EF3184F00FAB803 /* FirebaseDatabase in Frameworks */,
 				EB55FAB72EE8891400FBB2D0 /* FirebaseFirestore in Frameworks */,
 				EB55FAB92EE8891400FBB2D0 /* FirebaseStorage in Frameworks */,
 			);
@@ -74,6 +76,7 @@
 			packageProductDependencies = (
 				EB55FAB62EE8891400FBB2D0 /* FirebaseFirestore */,
 				EB55FAB82EE8891400FBB2D0 /* FirebaseStorage */,
+				54C998E12EF3184F00FAB803 /* FirebaseDatabase */,
 			);
 			productName = "VinBladel-Rework";
 			productReference = EB55FA9F2EE8823000FBB2D0 /* VinBladel-Rework.app */;
@@ -363,6 +366,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		54C998E12EF3184F00FAB803 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB55FAB52EE8891400FBB2D0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
 		EB55FAB62EE8891400FBB2D0 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = EB55FAB52EE8891400FBB2D0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
