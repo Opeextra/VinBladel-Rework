@@ -10,6 +10,8 @@ import SwiftUI
 struct IndividualCustomer: View {
     var body: some View {
         NavigationStack{
+            List{
+                Text("Test")
             NavigationLink(destination: Existing()) {
                 Text("List")
                     .frame(width: 100, height: 50)
