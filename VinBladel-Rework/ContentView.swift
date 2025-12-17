@@ -17,9 +17,15 @@ struct ContentView: View {
             .font(.subheadline.italic())
         Divider()
         NavigationStack(){
-            NavigationLink("VINScanner", destination: AddVINView(scannedVIN: $scannedVIN))
+            ZStack{
+                NavigationLink("Scan Vin", destination: AddVINView(scannedVIN: $scannedVIN))
+                    .font(.custom("college" , size: ))
+                
+            }
+            
             NavigationLink("Client Details", destination: ClientDetailsView())
         }
+        
     }
 }
 
