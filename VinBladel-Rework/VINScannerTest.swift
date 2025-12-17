@@ -6,7 +6,7 @@
 //
 import SwiftUI
 import VisionKit
-internal import Vision
+import Vision
 
 struct AddVINView: View{
     @Binding var scannedVIN: String?
