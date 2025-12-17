@@ -11,7 +11,7 @@ struct StartPage: View {
     var body: some View {
         NavigationStack{
             HStack {
-                NavigationLink(destination: Exsisting()) {
+                NavigationLink(destination: Existing()) {
                     Text("Exsisting")
                 }
                 .frame(width: 100, height: 50)

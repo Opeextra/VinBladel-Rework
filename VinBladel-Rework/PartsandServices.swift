@@ -10,7 +10,7 @@ import SwiftUI
 struct PartsandServices: View {
     var body: some View {
         NavigationStack{
-            NavigationLink(destination: Exsisting()) {
+            NavigationLink(destination: Existing()) {
                 Text("List")
                     .frame(width: 100, height: 50)
                     .foregroundStyle(.black)
