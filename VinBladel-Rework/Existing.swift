@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Exsisting: View {
+struct Existing: View {
     var body: some View {
         NavigationStack{
             NavigationLink(destination: StartPage()) {
@@ -22,5 +22,5 @@ struct Exsisting: View {
 }
 
 #Preview {
-    Exsisting()
+    Existing()
 }
