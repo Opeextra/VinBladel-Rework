@@ -18,6 +18,7 @@ struct ContentView: View {
         Divider()
         NavigationStack(){
             NavigationLink("VINScanner", destination: AddVINView(scannedVIN: $scannedVIN))
+            NavigationLink("Client Details", destination: ClientDetailsView())
         }
     }
 }
