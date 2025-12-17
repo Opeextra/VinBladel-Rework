@@ -17,12 +17,17 @@ struct ContentView: View {
             Text("By Jacob Caulfield, Aadi Shah, and Matthew Barton")
                 .font(.subheadline.italic())
             Divider()
-            NavigationLink("VINScanner", destination: AddVINView(scannedVIN: $scannedVIN))
+            ZStack{
+                NavigationLink("Scan Vin", destination: AddVINView(scannedVIN: $scannedVIN))
+                    .font(.custom("college" , size: ))
+                
+            }
+            
             NavigationLink("Client Details", destination: ClientDetailsView())
             Divider()
             ASECertTwitterHandleView()
-        }
-    }
+        
+        
 }
 
 #Preview {
