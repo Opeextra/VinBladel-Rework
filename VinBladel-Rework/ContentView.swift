@@ -26,10 +26,12 @@ struct ContentView: View {
             NavigationLink("Client Details", destination: ClientDetailsView())
             Divider()
             ASECertTwitterHandleView()
+            
+            
+        }
         
-        
-}
-
-#Preview {
-    ContentView(scannedVIN: nil)
+        #Preview {
+            ContentView(scannedVIN: nil)
+        }
+    }
 }
