@@ -10,13 +10,13 @@ import SwiftUI
 struct ContentView: View {
     @State var scannedVIN: String? = nil
     var body: some View {
-      Text("VINBladel")
-            .font(.largeTitle)
-            .padding()
-        Text("By Jacob Caulfield, Aadi Shah, and Matthew Barton")
-            .font(.subheadline.italic())
-        Divider()
         NavigationStack(){
+            Text("VINBladel")
+                .font(.largeTitle)
+                .padding()
+            Text("By Jacob Caulfield, Aadi Shah, and Matthew Barton")
+                .font(.subheadline.italic())
+            Divider()
             ZStack{
                 NavigationLink("Scan Vin", destination: AddVINView(scannedVIN: $scannedVIN))
                     .font(.custom("college" , size: 50))
@@ -24,9 +24,10 @@ struct ContentView: View {
             }
             
             NavigationLink("Client Details", destination: ClientDetailsView())
-        }
+            Divider()
+            ASECertTwitterHandleView()
         
-    }
+        
 }
 
 #Preview {

@@ -15,22 +15,9 @@
 		EB55FA9F2EE8823000FBB2D0 /* VinBladel-Rework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VinBladel-Rework.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		EB05B67D2EF3148300835DA7 /* Exceptions for "VinBladel-Rework" folder in "VinBladel-Rework" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = EB55FA9E2EE8823000FBB2D0 /* VinBladel-Rework */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		EB55FAA12EE8823000FBB2D0 /* VinBladel-Rework */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				EB05B67D2EF3148300835DA7 /* Exceptions for "VinBladel-Rework" folder in "VinBladel-Rework" target */,
-			);
 			path = "VinBladel-Rework";
 			sourceTree = "<group>";
 		};
@@ -279,7 +266,6 @@
 				DEVELOPMENT_TEAM = LR6JS3XL23;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "VinBladel-Rework/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = VINBladel;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCameraUsageDescription = "App needs camera to scan VIN Barcodes";
@@ -316,7 +302,6 @@
 				DEVELOPMENT_TEAM = LR6JS3XL23;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "VinBladel-Rework/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = VINBladel;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCameraUsageDescription = "App needs camera to scan VIN Barcodes";
