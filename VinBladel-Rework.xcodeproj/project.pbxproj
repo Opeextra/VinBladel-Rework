@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		EB55FAB72EE8891400FBB2D0 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EB55FAB62EE8891400FBB2D0 /* FirebaseFirestore */; };
+		EB55FAB92EE8891400FBB2D0 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = EB55FAB82EE8891400FBB2D0 /* FirebaseStorage */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		EB55FA9F2EE8823000FBB2D0 /* VinBladel-Rework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VinBladel-Rework.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB55FAB72EE8891400FBB2D0 /* FirebaseFirestore in Frameworks */,
+				EB55FAB92EE8891400FBB2D0 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,8 @@
 			);
 			name = "VinBladel-Rework";
 			packageProductDependencies = (
+				EB55FAB62EE8891400FBB2D0 /* FirebaseFirestore */,
+				EB55FAB82EE8891400FBB2D0 /* FirebaseStorage */,
 			);
 			productName = "VinBladel-Rework";
 			productReference = EB55FA9F2EE8823000FBB2D0 /* VinBladel-Rework.app */;
@@ -94,6 +103,9 @@
 			);
 			mainGroup = EB55FA962EE8823000FBB2D0;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				EB55FAB52EE8891400FBB2D0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EB55FAA02EE8823000FBB2D0 /* Products */;
 			projectDirPath = "";
@@ -251,6 +263,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LR6JS3XL23;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -282,6 +295,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LR6JS3XL23;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -328,6 +342,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EB55FAB52EE8891400FBB2D0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EB55FAB62EE8891400FBB2D0 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB55FAB52EE8891400FBB2D0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		EB55FAB82EE8891400FBB2D0 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB55FAB52EE8891400FBB2D0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EB55FA972EE8823000FBB2D0 /* Project object */;
 }
