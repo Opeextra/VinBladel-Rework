@@ -10,12 +10,8 @@ import SwiftUI
 struct IndividualCustomer: View {
     var body: some View {
         NavigationStack{
-            NavigationLink(destination: Exsisting()) {
-                Text("List")
-                    .frame(width: 100, height: 50)
-                    .foregroundStyle(.black)
-                    .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
-                    .padding()
+            List{
+                Text("Test")
             }
         }
     }
