@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Exsisting: View {
+struct Existing: View {
     var body: some View {
         NavigationStack{
             List{
@@ -18,5 +18,5 @@ struct Exsisting: View {
 }
 
 #Preview {
-    Exsisting()
+    Existing()
 }

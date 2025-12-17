@@ -12,6 +12,12 @@ struct PartsandServices: View {
         NavigationStack{
             List{
                 Text("Test")
+            NavigationLink(destination: Existing()) {
+                Text("List")
+                    .frame(width: 100, height: 50)
+                    .foregroundStyle(.black)
+                    .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
+                    .padding()
             }
         }
     }
