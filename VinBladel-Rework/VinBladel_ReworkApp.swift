@@ -9,9 +9,26 @@ import SwiftUI
 
 @main
 struct VinBladel_ReworkApp: App {
+    @State var lauchScreen: Bool = false
     var body: some Scene {
         WindowGroup {
-            StartPage()
+            if lauchScreen == true {
+                StartPage()
+                ContentView()
+                    .transition(.slide)
+            } else {
+                Text("VINBladel")
+                    .font(.largeTitle)
+                    .bold()
+                    .onAppear(){
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation() {
+                                self.lauchScreen = true
+                                // Make it so the firebase realtime database loads during this time
+                            }
+                        }
+                    }
+            }
         }
     }
 }

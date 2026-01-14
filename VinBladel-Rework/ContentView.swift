@@ -29,9 +29,5 @@ struct ContentView: View {
             
             
         }
-        
-        #Preview {
-            ContentView(scannedVIN: nil)
-        }
     }
 }
