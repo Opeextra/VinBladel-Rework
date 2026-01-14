@@ -11,9 +11,8 @@ struct PartsandServices: View {
     var body: some View {
         NavigationStack{
             List{
-                Text("Test")
                 NavigationLink(destination: Existing()) {
-                    Text("List")
+                    Text("Go to summary")
                         .frame(width: 100, height: 50)
                         .foregroundStyle(.black)
                         .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))

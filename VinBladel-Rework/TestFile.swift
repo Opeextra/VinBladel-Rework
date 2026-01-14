@@ -18,6 +18,15 @@ struct TestFile: View {
             Label("Send Mail", systemImage: "envelope")
         }
     }
+    func generateInvoice(from view: UIView) -> URL? {
+        let renderer = UIGraphicsImageRenderer(bounds: view.bounds)
+        let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] .appendingPathComponent("invoice.pdf")
+        do{
+            try renderer.writePDF(to: url ){ context in context.beginPage(); view.layer.render(in: context.cgContext)
+                
+            }
+        }
+    }
 }
 
 #Preview {
