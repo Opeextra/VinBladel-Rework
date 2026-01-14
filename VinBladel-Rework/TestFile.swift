@@ -22,10 +22,22 @@ struct TestFile: View {
         let renderer = UIGraphicsImageRenderer(bounds: view.bounds)
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] .appendingPathComponent("invoice.pdf")
         do{
-            try renderer.writePDF(to: url ){ context in context.beginPage(); view.layer.render(in: context.cgContext)
+            try renderer.writeP
                 
             }
         }
+    }
+    func emailInvoice(pdfURL: URL, presenter: UIViewController) {
+        guard MFMailComposeViewController.canSendMail() else {
+            print("Mail Not configured")
+            return
+        }
+        let mailVC = MFMailComposeViewController()
+        mailVC.mailComposeDelegate = presenter as? MFMailComposeViewControllerDelegate
+        
+        mailVC.setToRecipients(["ashah8399@stu.d214.org"])
+        mailVC.setSubject("invoice")
+        mailVC.setMessageBody("Hello", isHTML: false)
     }
 }
 
