@@ -8,15 +8,12 @@ import SwiftUI
 
 struct ClientDetailsView: View {
     @State var clients: [Client] = []
-    @State var popOver: Bool = false
+    @State var showAlert: Bool = false
     var body: some View {
         NavigationStack{
-            Button("Add New"){
-                popOver.toggle()
-            }
-            .popover(isPresented: $popOver){
-                AddClient(clients: $clients)
-            }
+            NavigationLink(destination: AddClient(clients: $clients), label: {
+                Text("Add Client")
+            })
             Text("Previous Clients")
             ScrollView{
                 ForEach(clients, id: \.id) { client in
@@ -31,8 +28,36 @@ struct ClientDetailsView: View {
 struct AddClient: View {
     @Binding var clients: [Client]
     @State var name: String = ""
+    @State var contactInfo: [String: String] = [:]
+    @State var contact: String = ""
+    @State var contactData: String = ""
     var body: some View {
-        TextField("Name", text: $name)
+        NavigationStack{
+            TextField("Name", text: $name)
+            NavigationLink(destination: ContactInfoView(contactData: $contactData, contact: $contact, contactInfo: $contactInfo, clients: $clients), label: {Text("Add contact Info")})
+            Button("Add Client"){
+                clients.append(Client(id: name, name:  name, contactInfo: contactInfo))
+            }
+            .padding()
+        }
+    }
+}
+struct ContactInfoView: View {
+    @Binding var contactData: String
+    @Binding var contact: String
+    @Binding var contactInfo: [String: String]
+    @Binding var clients: [Client]
+    
+    var body: some View {
+        VStack{
+            TextField("Enter info name. ex: Phone number, email", text: $contact)
+            TextField("Enter info data. ex: +1 (847) 732-3491", text: $contactData)
+        }
+        Button("Add"){
+            contactInfo[contact] = contactData
+            contact = ""
+            contactData = ""
+        }
     }
 }
 struct Client: Identifiable{
@@ -49,9 +74,11 @@ struct ClientView: View {
         VStack{
             Text("Name: \(name)")
             Text("Contact Info: \(contact)")
-            
         }
         .padding()
+        .onAppear(){
+            load()
+        }
     }
     func load(){
         for (key, value) in contactInfo{
