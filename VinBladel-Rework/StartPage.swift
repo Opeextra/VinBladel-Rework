@@ -10,6 +10,9 @@ import SwiftUI
 struct StartPage: View {
     var body: some View {
         NavigationStack{
+            NavigationLink("Test File") {
+                TestFile()
+            }
             VStack{
                 HStack {
                     NavigationLink(destination: Existing()) {
