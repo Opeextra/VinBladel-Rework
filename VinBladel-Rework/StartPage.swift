@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct StartPage: View {
+    @State var scannedVin: String? = nil
     var body: some View {
         NavigationStack{
             NavigationLink("Test File") {
@@ -39,7 +40,7 @@ struct StartPage: View {
                     .foregroundStyle(.black)
                     .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
                     .padding()
-                    NavigationLink(destination: VinScan()) {
+                    NavigationLink(destination: AddVINView(scannedVIN: $scannedVin)) {
                         Text("Scan Vin")
                     }
                     .frame(width: 100, height: 50)
@@ -50,6 +51,8 @@ struct StartPage: View {
             }
             .scaleEffect(2)
         }
+        ASECertTwitterHandleView()
+            .frame(maxWidth: 300, maxHeight: 200)
     }
 }
 

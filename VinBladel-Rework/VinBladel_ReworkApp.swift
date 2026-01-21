@@ -14,7 +14,7 @@ struct VinBladel_ReworkApp: App {
         WindowGroup {
             if lauchScreen == true {
                 StartPage()
-                ContentView()
+//                ContentView()
                     .transition(.slide)
             } else {
                 Text("VINBladel")
