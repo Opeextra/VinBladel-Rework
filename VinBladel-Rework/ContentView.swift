@@ -14,7 +14,7 @@ struct ContentView: View {
             Text("VINBladel")
                 .font(.largeTitle)
                 .padding()
-            Text("By Jacob Caulfield, Aadi Shah, and Matthew Barton")
+            Text("Developers: Matthew Barton, Jacob Caufield, and  Aadi Shah")
                 .font(.subheadline.italic())
             Divider()
             ZStack{
@@ -25,7 +25,6 @@ struct ContentView: View {
             
             NavigationLink("Client Details", destination: ClientDetailsView())
             Divider()
-            ASECertTwitterHandleView()
             
             
         }
