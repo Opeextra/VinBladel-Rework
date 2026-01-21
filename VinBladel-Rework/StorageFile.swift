@@ -8,7 +8,8 @@
 import SwiftUI
 import FirebaseDatabase
 
-struct car{
+struct car: Identifiable{
+    let ownerID: String
     let id: String
     let make: String
     let model: String

@@ -16,7 +16,7 @@ struct StartPage: View {
             VStack{
                 HStack {
                     NavigationLink(destination: Existing()) {
-                        Text("Exsisting")
+                        Text("Existing")
                     }
                     .frame(width: 100, height: 50)
                     .foregroundStyle(.black)
