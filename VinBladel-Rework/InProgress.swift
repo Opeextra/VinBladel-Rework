@@ -11,7 +11,7 @@ struct InProgress: View {
     var body: some View {
         NavigationStack{
             List{
-                Text("Test")
+                NavigationLink("Test", destination: PartsandServices())
             }
         }
     }

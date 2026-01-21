@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct IndividualCustomer: View {
+    @Binding var customer: Client
     var body: some View {
         NavigationStack{
             List{
@@ -24,6 +25,4 @@ struct IndividualCustomer: View {
     }
 }
 
-#Preview {
-    IndividualCustomer()
-}
+

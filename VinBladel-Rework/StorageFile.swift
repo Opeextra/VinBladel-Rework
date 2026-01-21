@@ -6,3 +6,17 @@
 //
 
 import SwiftUI
+import FirebaseDatabase
+
+struct car: Identifiable{
+    let ownerID: String
+    let id: String
+    let make: String
+    let model: String
+    let vin: String
+    let year: String
+}
+struct customer: Identifiable{
+    let id: String
+    let name: String
+}
