@@ -60,11 +60,6 @@ struct ContactInfoView: View {
         }
     }
 }
-struct Client: Identifiable{
-    let id: String
-    var name: String
-    var contactInfo: [String: String]
-}
 struct ClientView: View {
     let id: String
     let name: String

@@ -1,3 +1,11 @@
+//
+//  AppDelegate.swift
+//  VinBladel-Rework
+//
+//  Created by Jacob M. Caulfield on 1/21/26.
+//
+
+
 import UIKit
 import FirebaseCore
 
