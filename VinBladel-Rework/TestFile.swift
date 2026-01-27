@@ -20,24 +20,12 @@ struct TestFile: View {
         }
         .sheet(isPresented: $showMail) {
             if MFMailComposeViewController.canSendMail(){
-                MailView()
+                MailView(isPresented: $showMail)
             }else{
                 Text("Not Available")
             }
         }
     }
-    //    func generateInvoice(from view: UIView) -> URL? {
-    //        let renderer = UIGraphicsImageRenderer(bounds: view.bounds)
-    //        let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] .appendingPathComponent("invoice.pdf")
-    //        do{
-    //            try renderer.;{ ctx in
-    //
-    //            }
-    //
-    //            }
-    //        }
-    //    }
-    
 }
 #Preview {
     TestFile()
