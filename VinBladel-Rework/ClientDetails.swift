@@ -6,6 +6,11 @@
 //
 import SwiftUI
 
+struct Client: Identifiable{
+    var id: String
+    let name: String
+    let contactInfo: [String: String]
+}
 struct ClientDetailsView: View {
     @State var clients: [Client] = []
     @State var showAlert: Bool = false

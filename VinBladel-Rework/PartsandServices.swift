@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PartsandServices: View {
+    var parts: [Part] = []
     var body: some View {
         NavigationStack{
             List{
@@ -22,6 +23,14 @@ struct PartsandServices: View {
         }
     }
 }
+
+struct Part: Identifiable {
+    var name: String
+    var id: String
+    var price: Double
+}
+
+
 #Preview {
     PartsandServices()
 }

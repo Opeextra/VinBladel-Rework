@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct StartPage: View {
-    @Environment(DatabaseViewModel.self) private var viewModel
+//    @Environment(DatabaseViewModel.self) private var viewModel
     @State var scannedVin: String? = nil
     var body: some View {
         NavigationStack{
-            NavigationLink("View Model Test", destination: DatabaseViewModelTest())
+//            NavigationLink("View Model Test", destination: DatabaseViewModelTest())
             NavigationLink("Test File") {
                 TestFile()
             }
