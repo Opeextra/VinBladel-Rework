@@ -11,7 +11,8 @@ import Vision
 struct AddVINView: View{
     @Binding var scannedVIN: String?
     @State var showScanner: Bool = false
-    @State var scannerAvailable: Bool = DataScannerViewController.isSupported && DataScannerViewController.isAvailable // if device can use camera, it will add true to the var, otherwise false
+    @State var scannerAvailable: Bool = DataScannerViewController.isSupported && DataScannerViewController.isAvailable
+    // if device can use camera, it will add true to the var, otherwise false
     var body: some View{
         VStack {
             if let vin = scannedVIN {
@@ -28,7 +29,7 @@ struct AddVINView: View{
             Button("Scan VIN") {
                 showScanner = true
                 if !scannerAvailable {
-                    print("camera access denied")
+                    scannedVIN = "Video Acess Blocked"
                 }
             }
             .disabled(!scannerAvailable)
@@ -75,7 +76,7 @@ struct VINScannerView: UIViewControllerRepresentable {
             case .barcode(let barcode):
                 if let vin = barcode.payloadStringValue, vin.count == 17 {  // VINs are 17 characters
                     parent.scannedVIN = vin // sets the @Binding var defined at the top to the vin it just unwrapped
-                    dataScanner.dismiss(animated: true)
+                    dataScanner.dismiss(animated: true) // dismisses the view
                 }
             default:
                 break

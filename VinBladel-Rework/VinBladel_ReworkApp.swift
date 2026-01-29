@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct VinBladel_ReworkApp: App {
     @State var lauchScreen: Bool = false
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
             if lauchScreen == true {
