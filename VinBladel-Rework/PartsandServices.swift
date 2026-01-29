@@ -8,38 +8,78 @@
 import SwiftUI
 
 struct PartsandServices: View {
-    @State var parts: [String: Part] = ["Example": Part(name: "No parts", id: "0", price: 0)]
-    @State var fallback: Part = Part(name: "No parts", id: "0", price: 0)
+    @State var parts: [String: Part] = [
+        "Example": Part(name: "Example Part", id: "0", price: 0)
+    ]
+    @State var fallback: Part = Part(name: "No parts", id: "fallback", price: 0)
+
     var body: some View {
-        NavigationStack{
-            List{
+        NavigationStack {
+            List {
+                // Row 1: Go to summary
                 NavigationLink(destination: Existing()) {
                     Text("Go to summary")
-                        .frame(width: 100, height: 50)
+                        .frame(width: 160, height: 44)
                         .foregroundStyle(.black)
                         .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
-                        .padding()
-                    NavigationLink(destination: PartView(parts: $parts, part: parts["Example"] ?? fallback)){
-                        HStack{
-                            Text("Example")
+                        .padding(.vertical, 8)
+                }
+
+                // Row 2: Example part with Stepper and navigation to details
+                if let part = parts["Example"] {
+                    NavigationLink(destination: PartView(parts: $parts, part: part)) {
+                        HStack(spacing: 12) {
+                            Text(part.name)
+                            Spacer()
+                            Stepper(
+                                value: Binding<Int>(
+                                    get: { parts["Example"]?.count ?? 0 },
+                                    set: { newValue in
+                                        var updated = parts["Example"] ?? fallback
+                                        updated.count = newValue
+                                        parts["Example"] = updated
+                                    }
+                                ),
+                                in: 0...20
+                            ) {
+                                Text("Count: \(parts["Example"]?.count ?? 0)")
+                            }
+                            .labelsHidden()
                         }
                     }
+                } else {
+                    Text("No Example part available")
                 }
             }
+            .navigationTitle("Parts & Services")
         }
     }
 }
 
-struct Part: Identifiable {
+struct Part: Identifiable, Hashable {
     var name: String
     var id: String
     var price: Double
+    var count: Int = 0
 }
+
 struct PartView: View {
     @Binding var parts: [String: Part]
-    @State var part: Part
+    var part: Part
+
     var body: some View {
-        
+        VStack(alignment: .leading, spacing: 12) {
+            Text(part.name)
+                .font(.title2)
+            Text("ID: \(part.id)")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+            Text(String(format: "Price: $%.2f", part.price))
+            Text("Count: \(parts[part.name]?.count ?? part.count)")
+            Spacer()
+        }
+        .padding()
+        .navigationTitle("Part Details")
     }
 }
 
