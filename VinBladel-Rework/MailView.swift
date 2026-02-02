@@ -9,61 +9,67 @@ import SwiftUI
 import MessageUI
 import UIKit
 
-func generateInvoicePDF(from view: UIView) -> URL? {
-    let renderer = UIGraphicsPDFRenderer(bounds: view.bounds)
+class MailView: UIViewController, MFMailComposeViewControllerDelegate {
 
-    let url = FileManager.default
-        .urls(for: .documentDirectory, in: .userDomainMask)[0]
-        .appendingPathComponent("Invoice.pdf")
-
-    do {
-        try renderer.writePDF(to: url) { context in
-            context.beginPage()
-            view.layer.render(in: context.cgContext)
+    @IBOutlet weak var invoiceView: UIView!
+    @IBAction func sendInvoiceTapped(_ sender: UIButton) {
+        if let pdfURL = generateInvoicePDF(from: invoiceView) {
+            emailInvoice(pdfURL: pdfURL)
         }
-        return url
-    } catch {
-        print(error)
-        return nil
+    }
+
+    func generateInvoicePDF(from view: UIView) -> URL? {
+        let renderer = UIGraphicsPDFRenderer(bounds: view.bounds)
+
+        let url = FileManager.default
+            .urls(for: .documentDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("Invoice.pdf")
+
+        do {
+            try renderer.writePDF(to: url) { context in
+                context.beginPage()
+                view.layer.render(in: context.cgContext)
+            }
+            return url
+        } catch {
+            print(error)
+            return nil
+        }
+    }
+
+    func emailInvoice(pdfURL: URL) {
+        guard MFMailComposeViewController.canSendMail() else {
+            print("Mail not set up")
+            return
+        }
+
+        let mailVC = MFMailComposeViewController()
+        mailVC.mailComposeDelegate = self
+
+        mailVC.setToRecipients(["customer@email.com"])
+        mailVC.setSubject("Your Invoice")
+        mailVC.setMessageBody(
+            "Hello,\n\nPlease find your invoice attached.\n\nThank you!",
+            isHTML: false
+        )
+
+        if let pdfData = try? Data(contentsOf: pdfURL) {
+            mailVC.addAttachmentData(
+                pdfData,
+                mimeType: "application/pdf",
+                fileName: "Invoice.pdf"
+            )
+        }
+
+        present(mailVC, animated: true)
+    }
+
+    // MARK: - Mail Delegate
+    func mailComposeController(
+        _ controller: MFMailComposeViewController,
+        didFinishWith result: MFMailComposeResult,
+        error: Error?
+    ) {
+        controller.dismiss(animated: true)
     }
 }
-
-
-
-
-
-
-
-//struct MailView : UIViewControllerRepresentable {
-//    @Binding var isPresented: Bool
-//    
-//    func makeUIViewController(context: Context) -> MFMailComposeViewController {
-//        let mailVC = MFMailComposeViewController()
-//        mailVC.setToRecipients(["ashah8399@stu.d214.org"])
-//        mailVC.setSubject("invoice")
-//        if let pdfData = try? Data(contentsOf: pdfURL) {
-//               mailVC.addAttachmentData(
-//                   pdfData,
-//                   mimeType: "application/pdf",
-//                   fileName: "Invoice.pdf"
-//               )
-//           }
-//        mailVC.mailComposeDelegate = context.coordinator
-//        return mailVC
-//    }
-//    
-//    func updateUIViewController(_ uiViewController: MFMailComposeViewController, context: Context) {}
-//    
-//    func makeCoordinator() -> Coordinator {
-//        Coordinator(parent: self)
-//    }
-//    class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
-//        let parent : MailView
-//        init(parent: MailView) {
-//            self.parent = parent
-//        }
-//        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-//            parent.isPresented = false
-//        }
-//    }
-//}
