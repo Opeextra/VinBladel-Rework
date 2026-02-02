@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		54C998E22EF3184F00FAB803 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 54C998E12EF3184F00FAB803 /* FirebaseDatabase */; };
-		EB55FAB72EE8891400FBB2D0 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EB55FAB62EE8891400FBB2D0 /* FirebaseFirestore */; };
-		EB55FAB92EE8891400FBB2D0 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = EB55FAB82EE8891400FBB2D0 /* FirebaseStorage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,8 +28,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				54C998E22EF3184F00FAB803 /* FirebaseDatabase in Frameworks */,
-				EB55FAB72EE8891400FBB2D0 /* FirebaseFirestore in Frameworks */,
-				EB55FAB92EE8891400FBB2D0 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,8 +78,6 @@
 			);
 			name = "VinBladel-Rework";
 			packageProductDependencies = (
-				EB55FAB62EE8891400FBB2D0 /* FirebaseFirestore */,
-				EB55FAB82EE8891400FBB2D0 /* FirebaseStorage */,
 				54C998E12EF3184F00FAB803 /* FirebaseDatabase */,
 			);
 			productName = "VinBladel-Rework";
@@ -278,12 +272,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LR6JS3XL23;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = VINBladel;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSCameraUsageDescription = "App needs camera to scan VIN Barcodes";
+				INFOPLIST_KEY_NSCameraUsageDescription = "VINBladel needs the camera to scan VIN Barcodes";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -298,9 +291,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.jhhs.AMJ.VinBladel-Rework";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -317,12 +307,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LR6JS3XL23;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = VINBladel;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSCameraUsageDescription = "App needs camera to scan VIN Barcodes";
+				INFOPLIST_KEY_NSCameraUsageDescription = "VINBladel needs the camera to scan VIN Barcodes";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -337,9 +326,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.jhhs.AMJ.VinBladel-Rework";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -388,16 +374,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EB55FAB52EE8891400FBB2D0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
-		};
-		EB55FAB62EE8891400FBB2D0 /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EB55FAB52EE8891400FBB2D0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
-		};
-		EB55FAB82EE8891400FBB2D0 /* FirebaseStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EB55FAB52EE8891400FBB2D0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

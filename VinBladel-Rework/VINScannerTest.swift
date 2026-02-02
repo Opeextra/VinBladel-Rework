@@ -30,7 +30,7 @@ struct AddVINView: View{
             Button("Scan VIN") {
                 showScanner = true
                 if !scannerAvailable {
-                    scannedVIN = "Video Acess Blocked"
+                    scannedVIN = "Video Access Blocked"
                 }
             }
             .disabled(!scannerAvailable)
