@@ -14,7 +14,7 @@ struct StartPage: View {
         NavigationStack{
 //            NavigationLink("View Model Test", destination: DatabaseViewModelTest())
             NavigationLink("Test File") {
-                TestFile()
+                InvoiceView()
             }
             VStack{
                 HStack {

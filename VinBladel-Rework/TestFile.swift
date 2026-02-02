@@ -9,18 +9,52 @@ import SwiftUI
 import MessageUI
 import UIKit
 
+import SwiftUI
 
-class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
+struct InvoiceView: View {
 
-    @IBOutlet weak var invoiceView: UIView!
-    @IBAction func sendInvoiceTapped(_ sender: UIButton) {
-        if let pdfURL = generateInvoicePDF(from: invoiceView) {
-            emailInvoice(pdfURL: pdfURL)
+    @State private var showMail = false
+    @State private var pdfURL: URL?
+
+    var body: some View {
+        VStack {
+            // 👇 This is what becomes the PDF
+            invoiceContent
+
+            Button("Send Invoice") {
+                pdfURL = PDFGenerator.generate(from: invoiceContent)
+                showMail = pdfURL != nil
+            }
+            .padding()
+        }
+        .sheet(isPresented: $showMail) {
+            if let pdfURL {
+                MailView(pdfURL: pdfURL)
+            }
         }
     }
 
-    func generateInvoicePDF(from view: UIView) -> URL? {
-        let renderer = UIGraphicsPDFRenderer(bounds: view.bounds)
+    var invoiceContent: some View {
+        VStack {
+            Text("Invoice #123")
+                .font(.title)
+            Text("Total: $120.00")
+        }
+        .padding()
+    }
+
+}
+
+enum PDFGenerator {
+
+    static func generate<Content: View>(
+        from view: Content
+    ) -> URL? {
+
+        let controller = UIHostingController(rootView: view)
+        controller.view.bounds = CGRect(x: 0, y: 0, width: 612, height: 792)
+
+        let renderer = UIGraphicsPDFRenderer(bounds: controller.view.bounds)
 
         let url = FileManager.default
             .urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -29,7 +63,7 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
         do {
             try renderer.writePDF(to: url) { context in
                 context.beginPage()
-                view.layer.render(in: context.cgContext)
+                controller.view.layer.render(in: context.cgContext)
             }
             return url
         } catch {
@@ -37,70 +71,34 @@ class ViewController: UIViewController, MFMailComposeViewControllerDelegate {
             return nil
         }
     }
-
-    func emailInvoice(pdfURL: URL) {
-        guard MFMailComposeViewController.canSendMail() else {
-            print("Mail not set up")
-            return
-        }
-
-        let mailVC = MFMailComposeViewController()
-        mailVC.mailComposeDelegate = self
-
-        mailVC.setToRecipients(["customer@email.com"])
-        mailVC.setSubject("Your Invoice")
-        mailVC.setMessageBody(
-            "Hello,\n\nPlease find your invoice attached.\n\nThank you!",
-            isHTML: false
-        )
-
-        if let pdfData = try? Data(contentsOf: pdfURL) {
-            mailVC.addAttachmentData(
-                pdfData,
-                mimeType: "application/pdf",
-                fileName: "Invoice.pdf"
-            )
-        }
-
-        present(mailVC, animated: true)
-    }
-
-    // MARK: - Mail Delegate
-    func mailComposeController(
-        _ controller: MFMailComposeViewController,
-        didFinishWith result: MFMailComposeResult,
-        error: Error?
-    ) {
-        controller.dismiss(animated: true)
-    }
 }
 
 
-struct TestFile: View {
-    @State private var showMail: Bool = false
-    
-    var body: some View {
-        Button{
-            showMail = true
-        }label: {
-            Label("Send Mail", systemImage: "envelope")
-        }
-        .sheet(isPresented: $showMail) {
-            if MFMailComposeViewController.canSendMail(){
-                MailView(isPresented: $showMail)
-            }else{
-                Text("Not Available")
-            }
-        }
-        Button{
-            
-        }label: {
-            Text("Test PDF")
-        }
-    }
-    
-}
-
-#Preview {
-    TestFile()
-}
+//struct TestFile: View {
+//    @State private var showMail: Bool = false
+//    
+//    var body: some View {
+//        Button{
+//            showMail = true
+//        }label: {
+//            Label("Send Mail", systemImage: "envelope")
+//        }
+//        .sheet(isPresented: $showMail) {
+//            if MFMailComposeViewController.canSendMail(){
+//                MailView(isPresented: $showMail)
+//            }else{
+//                Text("Not Available")
+//            }
+//        }
+//        Button{
+//            
+//        }label: {
+//            Text("Test PDF")
+//        }
+//    }
+//    
+//}
+//
+//#Preview {
+//    TestFile()
+//}
