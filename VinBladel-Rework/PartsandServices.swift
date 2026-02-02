@@ -43,6 +43,13 @@ struct PartsandServices: View {
             }
             .navigationTitle("Parts & Services")
         }
+        NavigationLink(destination: Existing()) {
+            Text("Go to summary")
+                .frame(width: 160, height: 44)
+                .foregroundStyle(.black)
+                .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
+                .padding(.vertical, 8)
+        }
     }
 }
 

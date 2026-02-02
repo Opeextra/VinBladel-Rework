@@ -15,6 +15,9 @@ struct StartPage: View {
 //            NavigationLink("View Model Test", destination: DatabaseViewModelTest())
             VStack{
                 HStack {
+                    NavigationLink(destination: InvoiceView()) {
+                        Text("Test")
+                    }
                     NavigationLink(destination: Existing()) {
                         Text("Existing")
                     }
