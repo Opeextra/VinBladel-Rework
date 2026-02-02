@@ -13,6 +13,7 @@ struct AddVINView: View{
     @State var showScanner: Bool = false
     @State var scannerAvailable: Bool = DataScannerViewController.isSupported && DataScannerViewController.isAvailable
     // if device can use camera, it will add true to the var, otherwise false
+    @State var list: [String] = []
     var body: some View{
         VStack {
             if let vin = scannedVIN {
@@ -43,6 +44,11 @@ struct AddVINView: View{
             VINScannerView(scannedVIN: $scannedVIN)
         }
         // adds an overlay to the screen when the button is pressed
+        List {
+            ForEach(list, id: \.self) { item in
+                Text(item)
+            }
+        }
     }
 }
 struct VINScannerView: UIViewControllerRepresentable {

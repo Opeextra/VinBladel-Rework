@@ -8,29 +8,44 @@
 import SwiftUI
 import MessageUI
 
-struct MailView : UIViewControllerRepresentable {
-    @Binding var isPresented: Bool
+struct MailView: UIViewControllerRepresentable {
+
+    let pdfURL: URL
+
     func makeUIViewController(context: Context) -> MFMailComposeViewController {
         let mailVC = MFMailComposeViewController()
-        mailVC.setToRecipients(["ashah8399@stu.d214.org"])
-        mailVC.setSubject("invoice")
-        mailVC.setMessageBody("Hello", isHTML: false)
         mailVC.mailComposeDelegate = context.coordinator
+
+        mailVC.setSubject("Your Invoice")
+        mailVC.setMessageBody("Please find your invoice attached.", isHTML: false)
+
+        if let data = try? Data(contentsOf: pdfURL) {
+            mailVC.addAttachmentData(
+                data,
+                mimeType: "application/pdf",
+                fileName: "Invoice.pdf"
+            )
+        }
+
         return mailVC
     }
-    
-    func updateUIViewController(_ uiViewController: MFMailComposeViewController, context: Context) {}
-    
+
+    func updateUIViewController(
+        _ uiViewController: MFMailComposeViewController,
+        context: Context
+    ) {}
+
     func makeCoordinator() -> Coordinator {
-        Coordinator(parent: self)
+        Coordinator()
     }
+
     class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
-        let parent : MailView
-        init(parent: MailView) {
-            self.parent = parent
-        }
-        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-            parent.isPresented = false
+        func mailComposeController(
+            _ controller: MFMailComposeViewController,
+            didFinishWith result: MFMailComposeResult,
+            error: Error?
+        ) {
+            controller.dismiss(animated: true)
         }
     }
 }
