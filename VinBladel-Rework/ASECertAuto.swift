@@ -11,12 +11,9 @@ struct ASECertTwitterHandleView: View {
         HStack{
             Image("ASECertified")
             Image("AutomotiveTech")
-            Link(destination: URL(string: "https://twitter.com/herseyhuskies")!) {
-                Image("@HerseyAuto")
-            }
         }
         .padding()
-    }
+}
 }
 
 #Preview {
