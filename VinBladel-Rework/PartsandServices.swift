@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PartsandServices: View {
     @State var parts: [String: Part] = [
-        "Example": Part(name: "Example Part", id: "0", price: 0)
+        "Example": Part(name: "Example Part", id: "Example", price: 0)
     ]
     @State var fallback: Part = Part(name: "No parts", id: "fallback", price: 0)
 
@@ -44,7 +44,7 @@ struct PartsandServices: View {
                             ) {
                                 Text("Count: \(parts["Example"]?.count ?? 0)")
                             }
-                            .labelsHidden()
+                            
                         }
                     }
                 } else {
