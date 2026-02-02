@@ -13,9 +13,6 @@ struct StartPage: View {
     var body: some View {
         NavigationStack{
 //            NavigationLink("View Model Test", destination: DatabaseViewModelTest())
-            NavigationLink("Test File") {
-                InvoiceView()
-            }
             VStack{
                 HStack {
                     NavigationLink(destination: Existing()) {
