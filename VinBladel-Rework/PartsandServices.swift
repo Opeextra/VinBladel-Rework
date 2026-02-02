@@ -16,16 +16,6 @@ struct PartsandServices: View {
     var body: some View {
         NavigationStack {
             List {
-                // Row 1: Go to summary
-                NavigationLink(destination: Existing()) {
-                    Text("Go to summary")
-                        .frame(width: 160, height: 44)
-                        .foregroundStyle(.black)
-                        .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
-                        .padding(.vertical, 8)
-                }
-
-                // Row 2: Example part with Stepper and navigation to details
                 if let part = parts["Example"] {
                     NavigationLink(destination: PartView(parts: $parts, part: part)) {
                         HStack(spacing: 12) {
@@ -80,6 +70,9 @@ struct PartView: View {
         }
         .padding()
         .navigationTitle("Part Details")
+    }
+    func costInterpreter(price: Double, count: Int) -> Double{
+        return price * Double(count)
     }
 }
 
