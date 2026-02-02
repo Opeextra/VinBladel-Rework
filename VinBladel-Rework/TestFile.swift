@@ -28,7 +28,8 @@ struct InvoiceView: View {
             .padding()
         }
         .sheet(isPresented: $showMail) {
-            if let pdfURL {
+            Text("Hello")
+            if let pdfURL = pdfURL {
                 MailView(pdfURL: pdfURL)
             }
         }
