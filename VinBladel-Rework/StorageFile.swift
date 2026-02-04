@@ -16,8 +16,4 @@ struct car: Identifiable{
     let vin: String
     let year: String
 }
-struct customer: Identifiable {
-    let id: String
-    let name: String
-}
 

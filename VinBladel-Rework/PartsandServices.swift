@@ -21,6 +21,7 @@ struct PartsandServices: View {
                         HStack(spacing: 12) {
                             Text(part.name)
                             Spacer()
+                            // wanted to research how to have a binding for a value in a dictionary instead of removing and re adding
                             Stepper(
                                 value: Binding<Int>(
                                     get: { parts["Example"]?.count ?? 0 },
