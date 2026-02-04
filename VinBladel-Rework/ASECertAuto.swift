@@ -10,11 +10,15 @@ struct ASECertTwitterHandleView: View {
     var body: some View {
         HStack{
             Image("ASECertified")
+                .resizable()
+                .frame(width: 250, height: 250)
+                .padding(100)
             Image("AutomotiveTech")
-            Link(destination: URL(string: "https://twitter.com/herseyhuskies")!) {
-                Image("@HerseyAuto")
-            }
+                .resizable()
+                .frame(width: 250, height: 132.5)
+                .padding(50)
         }
+       
         .padding()
     }
 }

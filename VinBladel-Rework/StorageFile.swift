@@ -21,3 +21,9 @@ struct customer: Identifiable {
     let name: String
 }
 
+struct PARS: Identifiable{
+    let id: String
+    let example: String
+}
+
+
