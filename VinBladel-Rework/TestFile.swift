@@ -22,14 +22,17 @@ struct InvoiceView: View {
             invoiceContent
 
             Button("Send Invoice") {
-                pdfURL = PDFGenerator.generate(from: invoiceContent)
-                showMail = pdfURL != nil
-            }
-            .padding()
-        }
-        .sheet(isPresented: $showMail) {
-            if let pdfURL {
-                MailView(pdfURL: pdfURL)
+                guard MFMailComposeViewController.canSendMail() else {
+                    print("Mail not available")
+                    return
+                }
+
+                if let url = PDFGenerator.generate(from: invoiceContent) {
+                    pdfURL = url
+                    showMail = true
+                } else {
+                    print("❌ PDF generation failed")
+                }
             }
         }
     }
@@ -48,17 +51,24 @@ struct InvoiceView: View {
 enum PDFGenerator {
 
     static func generate<Content: View>(
-        from view: Content
+        from view: Content,
+        fileName: String = "Invoice.pdf"
     ) -> URL? {
 
+        let pageSize = CGSize(width: 612, height: 792) // US Letter
+
         let controller = UIHostingController(rootView: view)
-        controller.view.bounds = CGRect(x: 0, y: 0, width: 612, height: 792)
+        controller.view.bounds = CGRect(origin: .zero, size: pageSize)
+        controller.view.backgroundColor = .white
+
+        // 🔥 Force layout
+        controller.view.layoutIfNeeded()
 
         let renderer = UIGraphicsPDFRenderer(bounds: controller.view.bounds)
 
         let url = FileManager.default
             .urls(for: .documentDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("Invoice.pdf")
+            .appendingPathComponent(fileName)
 
         do {
             try renderer.writePDF(to: url) { context in
@@ -67,12 +77,11 @@ enum PDFGenerator {
             }
             return url
         } catch {
-            print(error)
+            print("PDF error:", error)
             return nil
         }
     }
 }
-
 
 //struct TestFile: View {
 //    @State private var showMail: Bool = false

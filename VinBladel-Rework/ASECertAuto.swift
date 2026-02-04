@@ -20,7 +20,7 @@ struct ASECertTwitterHandleView: View {
         }
        
         .padding()
-    }
+}
 }
 
 #Preview {
