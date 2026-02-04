@@ -15,6 +15,7 @@ struct PartsandServices: View {
 
     var body: some View {
         NavigationStack {
+            
             List {
                 if let part = parts["Example"] {
                     NavigationLink(destination: PartView(parts: $parts, part: part)) {
@@ -41,15 +42,19 @@ struct PartsandServices: View {
                     Text("No Example part available")
                 }
             }
+            
             .navigationTitle("Parts & Services")
+            NavigationLink(destination: Existing()) {
+                Text("Go to summary")
+                    .font(.custom("Arial", size: 40))
+                    .frame(width: 320, height: 88)
+                    .foregroundStyle(.black)
+                    .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
+                    .padding(.vertical, 8)
+            }
+            .offset(x: 225, y: 0)
         }
-        NavigationLink(destination: Existing()) {
-            Text("Go to summary")
-                .frame(width: 160, height: 44)
-                .foregroundStyle(.black)
-                .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
-                .padding(.vertical, 8)
-        }
+        
     }
 }
 
