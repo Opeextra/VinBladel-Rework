@@ -17,3 +17,9 @@ struct car: Identifiable{
     let year: String
 }
 
+struct PARS: Identifiable{
+    let id: String
+    let example: String
+}
+
+

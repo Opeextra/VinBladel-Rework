@@ -15,21 +15,43 @@ struct InvoiceView: View {
 
     @State private var showMail = false
     @State private var pdfURL: URL?
-
+    @State private var showShare = false
+    @State private var showExporter = false
     var body: some View {
         VStack {
             // 👇 This is what becomes the PDF
             invoiceContent
 
             Button("Send Invoice") {
-                pdfURL = PDFGenerator.generate(from: invoiceContent)
-                showMail = pdfURL != nil
+                guard MFMailComposeViewController.canSendMail() else {
+                    print("Mail not available")
+                    return
+                }
+
+                if let url = PDFGenerator.generate(from: invoiceContent) {
+                    pdfURL = url
+                    showExporter = true // Present Document Picker
+                } else {
+                    print("❌ PDF generation failed")
+                }
             }
-            .padding()
-        }
-        .sheet(isPresented: $showMail) {
-            if let pdfURL {
-                MailView(pdfURL: pdfURL)
+            // Share sheet
+            .sheet(isPresented: $showShare) {
+                if let url = pdfURL {
+                    ShareSheet(activityItems: [url])
+                } else {
+                    Text("No PDF available")
+                }
+            }
+
+            // Files export picker
+            .sheet(isPresented: $showExporter) {
+                if let url = pdfURL {
+                    DocumentExporter(url: url)
+                } else {
+                    Text("No PDF available")
+                }
+                
             }
         }
     }
@@ -43,34 +65,6 @@ struct InvoiceView: View {
         .padding()
     }
 
-}
-
-enum PDFGenerator {
-
-    static func generate<Content: View>(
-        from view: Content
-    ) -> URL? {
-
-        let controller = UIHostingController(rootView: view)
-        controller.view.bounds = CGRect(x: 0, y: 0, width: 612, height: 792)
-
-        let renderer = UIGraphicsPDFRenderer(bounds: controller.view.bounds)
-
-        let url = FileManager.default
-            .urls(for: .documentDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("Invoice.pdf")
-
-        do {
-            try renderer.writePDF(to: url) { context in
-                context.beginPage()
-                controller.view.layer.render(in: context.cgContext)
-            }
-            return url
-        } catch {
-            print(error)
-            return nil
-        }
-    }
 }
 
 
@@ -102,3 +96,4 @@ enum PDFGenerator {
 //#Preview {
 //    TestFile()
 //}
+
