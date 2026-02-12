@@ -7,11 +7,28 @@
 
 import SwiftUI
 
+struct customer: Identifiable {
+    let id: String
+    let name: String
+}
+
+struct CustomerView: View {
+    @Binding var customers: [String: customer]
+    @State var customerInView: customer? = nil
+    let customer: customer
+    var body: some View {
+        Text("\(customer.name)")
+    }
+}
+
 struct Existing: View {
+    @State var customers: [String: customer] = ["Test": customer(id: "Test", name: "Test")]
     var body: some View {
         NavigationStack{
             List{
-                Text("Test")
+                ForEach(Array(customers.values), id: \.id) { customer in
+                    NavigationLink("\(customer.name)", destination: CustomerView(customers: $customers, customer: customer))
+                }
             }
         }
     }

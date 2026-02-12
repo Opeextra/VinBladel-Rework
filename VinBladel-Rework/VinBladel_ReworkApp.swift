@@ -18,9 +18,7 @@ struct VinBladel_ReworkApp: App {
 //                ContentView()
                     .transition(.slide)
             } else {
-                Text("VINBladel")
-                    .font(.largeTitle)
-                    .bold()
+                loadingAnimation()
                     .onAppear(){
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                             withAnimation() {
