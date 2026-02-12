@@ -12,7 +12,7 @@ struct loadingAnimation: View {
     @State var isAnimating = false
     var body: some View {
         VStack{
-            Image("hersey-husky-logo")
+            Image("hersey-husky")
                 .resizable()
                 .frame(width: 150, height: 150)
                 .padding(15)
