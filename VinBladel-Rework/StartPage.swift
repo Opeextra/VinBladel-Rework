@@ -12,27 +12,25 @@ struct StartPage: View {
     @State var scannedVin: String? = nil
     var body: some View {
         NavigationStack{
-//            NavigationLink("View Model Test", destination: DatabaseViewModelTest())
             VStack{
                 HStack {
                     NavigationLink(destination: InvoiceView()) {
-                        Text("Test")
-                            .frame(width: 100, height: 50)
+                        Text("Invoice Test")
+                            .frame(width: 100, height: 25)
                             .foregroundStyle(.black)
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
                             .padding()
                     }
                     NavigationLink(destination: Existing()) {
                         Text("Existing")
-                            .frame(width: 100, height: 50)
+                            .frame(width: 100, height: 25)
                             .foregroundStyle(.black)
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
-                            .padding()
                     }
                    
                     NavigationLink(destination: InProgress()) {
                         Text("In Progress")
-                            .frame(width: 100, height: 50)
+                            .frame(width: 100, height: 25)
                             .foregroundStyle(.black)
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
                             .padding()
@@ -43,7 +41,7 @@ struct StartPage: View {
                     
                     NavigationLink(destination: Complete()) {
                         Text("Completed")
-                            .frame(width: 100, height: 50)
+                            .frame(width: 100, height: 25)
                         .foregroundStyle(.black)
                         .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
                         .padding()
@@ -51,14 +49,13 @@ struct StartPage: View {
                     
                     NavigationLink(destination: AddVINView(scannedVIN: $scannedVin)) {
                         Text("Scan Vin")
-                            .frame(width: 100, height: 50)
+                            .frame(width: 100, height: 25)
                             .foregroundStyle(.black)
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
-                            .padding()
                     }
                     NavigationLink(destination: PartsandServices()) {
-                        Text("Parts And services")
-                            .frame(width: 100, height: 50)
+                        Text("Services")
+                            .frame(width: 100, height: 25)
                             .foregroundStyle(.black)
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
                             .padding()
@@ -68,8 +65,8 @@ struct StartPage: View {
             }
             .scaleEffect(2)
         }
-        ASECertTwitterHandleView()
-            .frame(maxWidth: 300, maxHeight: 200)
+        ASECertView()
+            .frame(maxHeight: 175)
     }
 }
 

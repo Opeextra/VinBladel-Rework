@@ -6,24 +6,22 @@
 //
 import SwiftUI
 
-struct ASECertTwitterHandleView: View {
+struct ASECertView: View {
     var body: some View {
         HStack{
             Image("ASECertified")
                 .resizable()
-                .frame(width: 150, height: 150)
+                .scaledToFill()
                 .padding(100)
             Image("AutomotiveTech")
                 .resizable()
-                .scaledToFit()
-                .frame(width: 250, height: 125)
                 .padding(50)
+                .scaledToFill()
         }
        
         .padding()
 }
 }
-
 #Preview {
-    ASECertTwitterHandleView()
+    StartPage()
 }
