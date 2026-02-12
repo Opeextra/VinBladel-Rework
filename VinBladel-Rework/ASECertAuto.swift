@@ -11,11 +11,12 @@ struct ASECertTwitterHandleView: View {
         HStack{
             Image("ASECertified")
                 .resizable()
-                .frame(width: 250, height: 250)
+                .frame(width: 150, height: 150)
                 .padding(100)
             Image("AutomotiveTech")
                 .resizable()
-                .frame(width: 250, height: 132.5)
+                .scaledToFit()
+                .frame(width: 250, height: 125)
                 .padding(50)
         }
        

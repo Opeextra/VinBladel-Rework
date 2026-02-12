@@ -9,49 +9,64 @@ import SwiftUI
 import MessageUI
 import UIKit
 
-import SwiftUI
-
 struct InvoiceView: View {
 
     @State private var showMail = false
     @State private var pdfURL: URL?
     @State private var showShare = false
     @State private var showExporter = false
+    @State private var showMailUnavailableAlert = false
+    @State private var shareItem: URL?
+
     var body: some View {
         VStack {
             // 👇 This is what becomes the PDF
             invoiceContent
 
             Button("Send Invoice") {
-                guard MFMailComposeViewController.canSendMail() else {
-                    print("Mail not available")
-                    return
+                  if let url = PDFGenerator.generate(from: invoiceContent) {
+                      print("✅ PDF generated at: \(url.path)")
+                      // Ensure file exists
+                      if FileManager.default.fileExists(atPath: url.path) {
+                          pdfURL = url
+                          if MFMailComposeViewController.canSendMail() {
+                              // Present mail sheet synchronously after pdfURL is set
+                              print("Presenting Mail composer. pdfURL = \(pdfURL?.path ?? "nil")")
+                              showMail = true
+                          } else {
+                              // Fallbacks when Mail isn't available
+                              shareItem = url
+                              showMailUnavailableAlert = true
+                          }
+                      } else {
+                          print("❌ PDF file missing right after generation")
+                      }
+                  } else {
+                      print("❌ PDF generation failed")
+                  }
+              }
+              .sheet(isPresented: $showMail) {
+                  if let url = pdfURL {
+                      MailView(isPresented: $showMail, attachmentURL: url)
+                  } else {
+                      Text("No PDF available")
+                  }
+              }
+              .alert("Mail not available", isPresented: $showMailUnavailableAlert) {
+                  Button("Share Instead") {
+                      if let url = pdfURL { shareItem = url }
+                  }
+                  Button("Export to Files") {
+                      if pdfURL != nil { showExporter = true }
+                  }
+                  Button("OK", role: .cancel) { }
+              } message: {
+                  Text("This device can't send email. You can share or export the PDF instead.")
+              }
+            if let shareURL = shareItem {
+                ShareLink(item: shareURL) {
+                    Label("Share Invoice PDF", systemImage: "square.and.arrow.up")
                 }
-
-                if let url = PDFGenerator.generate(from: invoiceContent) {
-                    pdfURL = url
-                    showExporter = true // Present Document Picker
-                } else {
-                    print("❌ PDF generation failed")
-                }
-            }
-            // Share sheet
-            .sheet(isPresented: $showShare) {
-                if let url = pdfURL {
-                    ShareSheet(activityItems: [url])
-                } else {
-                    Text("No PDF available")
-                }
-            }
-
-            // Files export picker
-            .sheet(isPresented: $showExporter) {
-                if let url = pdfURL {
-                    DocumentExporter(url: url)
-                } else {
-                    Text("No PDF available")
-                }
-                
             }
         }
     }
