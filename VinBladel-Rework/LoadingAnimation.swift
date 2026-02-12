@@ -11,18 +11,19 @@ import SwiftUI
 struct loadingAnimation: View {
     @State var isAnimating = false
     var body: some View {
-        VStack{
-            Image("hersey-husky-logo")
+        ZStack{
+            Image("hersey-husky")
                 .resizable()
                 .frame(width: 150, height: 150)
                 .padding(15)
+                
             Circle()
-                .trim(from: 0.2, to: 1.0)
+                .trim(from: 0.23, to: 1.0)
                 .stroke(
                     Color.gray,
-                    style: StrokeStyle(lineWidth: 5, lineCap: .round)
+                    style: StrokeStyle(lineWidth: 15, lineCap: .round)
                 )
-                .frame(width: 40, height: 40)
+                .frame(width: 210, height: 210)
                 .rotationEffect(.degrees(isAnimating ? 360 : 0))
                 .animation(
                     .linear(duration: 1)
