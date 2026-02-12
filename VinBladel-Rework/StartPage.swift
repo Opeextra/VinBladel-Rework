@@ -56,7 +56,14 @@ struct StartPage: View {
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
                             .padding()
                     }
-                    
+                    NavigationLink(destination: PartsandServices()) {
+                        Text("Parts And services")
+                            .frame(width: 100, height: 50)
+                            .foregroundStyle(.black)
+                            .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
+                            .padding()
+                            
+                    }
                 }
             }
             .scaleEffect(2)
