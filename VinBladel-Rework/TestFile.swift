@@ -15,7 +15,8 @@ struct InvoiceView: View {
 
     @State private var showMail = false
     @State private var pdfURL: URL?
-
+    @State private var showShare = false
+    @State private var showExporter = false
     var body: some View {
         VStack {
             // 👇 This is what becomes the PDF
@@ -29,10 +30,28 @@ struct InvoiceView: View {
 
                 if let url = PDFGenerator.generate(from: invoiceContent) {
                     pdfURL = url
-                    showMail = true
+                    showExporter = true // Present Document Picker
                 } else {
                     print("❌ PDF generation failed")
                 }
+            }
+            // Share sheet
+            .sheet(isPresented: $showShare) {
+                if let url = pdfURL {
+                    ShareSheet(activityItems: [url])
+                } else {
+                    Text("No PDF available")
+                }
+            }
+
+            // Files export picker
+            .sheet(isPresented: $showExporter) {
+                if let url = pdfURL {
+                    DocumentExporter(url: url)
+                } else {
+                    Text("No PDF available")
+                }
+                
             }
         }
     }
@@ -48,40 +67,6 @@ struct InvoiceView: View {
 
 }
 
-enum PDFGenerator {
-
-    static func generate<Content: View>(
-        from view: Content,
-        fileName: String = "Invoice.pdf"
-    ) -> URL? {
-
-        let pageSize = CGSize(width: 612, height: 792) // US Letter
-
-        let controller = UIHostingController(rootView: view)
-        controller.view.bounds = CGRect(origin: .zero, size: pageSize)
-        controller.view.backgroundColor = .white
-
-        // 🔥 Force layout
-        controller.view.layoutIfNeeded()
-
-        let renderer = UIGraphicsPDFRenderer(bounds: controller.view.bounds)
-
-        let url = FileManager.default
-            .urls(for: .documentDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent(fileName)
-
-        do {
-            try renderer.writePDF(to: url) { context in
-                context.beginPage()
-                controller.view.layer.render(in: context.cgContext)
-            }
-            return url
-        } catch {
-            print("PDF error:", error)
-            return nil
-        }
-    }
-}
 
 //struct TestFile: View {
 //    @State private var showMail: Bool = false
@@ -111,3 +96,4 @@ enum PDFGenerator {
 //#Preview {
 //    TestFile()
 //}
+
