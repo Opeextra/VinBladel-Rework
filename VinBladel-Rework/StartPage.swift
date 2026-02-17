@@ -12,8 +12,8 @@ struct StartPage: View {
     @State var scannedVin: String? = nil
     var body: some View {
         NavigationStack{
-            VStack{
-                HStack {
+            HStack{
+                VStack {
                     NavigationLink(destination: InvoiceView()) {
                         Text("Invoice Test")
                             .frame(width: 100, height: 25)
@@ -37,7 +37,7 @@ struct StartPage: View {
                     }
                     
                 }
-                HStack {
+                VStack {
                     
                     NavigationLink(destination: Complete()) {
                         Text("Completed")
