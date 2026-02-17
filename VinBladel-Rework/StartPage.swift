@@ -38,7 +38,6 @@ struct StartPage: View {
                     
                 }
                 VStack {
-                    
                     NavigationLink(destination: Complete()) {
                         Text("Completed")
                             .frame(width: 100, height: 25)
@@ -63,7 +62,9 @@ struct StartPage: View {
                     }
                 }
             }
-            .scaleEffect(2)
+            .scaleEffect(3)
+            //MARK: Font
+            .font(.custom("Avenir Next", size: 16))
         }
         ASECertView()
             .frame(maxHeight: 175)
