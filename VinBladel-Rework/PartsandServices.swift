@@ -9,10 +9,10 @@ import SwiftUI
 
 struct PartsandServices: View {
     @State var parts: [String: Part] = [
-        "Example": Part(name: "Example Part", id: "Example", price: 0)
+        "Example": Part(name: "Example Part", id: "Example", price: 100)
     ]
     @State var fallback: Part = Part(name: "No parts", id: "fallback", price: 0)
-
+    
     var body: some View {
         NavigationStack {
             
@@ -45,15 +45,28 @@ struct PartsandServices: View {
             }
             
             .navigationTitle("Parts & Services")
-            NavigationLink(destination: Existing()) {
-                Text("Go to summary")
-                    .font(.custom("Arial", size: 40))
-                    .frame(width: 320, height: 88)
-                    .foregroundStyle(.black)
-                    .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
-                    .padding(.vertical, 8)
+            HStack{
+                Button(action: {
+                    
+                }) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10)
+                            .foregroundStyle(.orange)
+                        Text("Add Part")
+                            .font(.custom("Arial", size: 40))
+                        .foregroundStyle(.black)                    }
+                }
+                .frame(width: 320, height: 88)
+                .padding(.vertical, 8)
+                NavigationLink(destination: Existing()) {
+                    Text("Go to summary")
+                        .font(.custom("Arial", size: 40))
+                        .frame(width: 320, height: 88)
+                        .foregroundStyle(.black)
+                        .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
+                        .padding(.vertical, 8)
+                }
             }
-            .offset(x: 225, y: 0)
         }
         
     }
@@ -69,7 +82,6 @@ struct Part: Identifiable, Hashable {
 struct PartView: View {
     @Binding var parts: [String: Part]
     var part: Part
-
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(part.name)
