@@ -108,8 +108,9 @@ struct StartPage: View {
             //MARK: Font
             .font(.custom("Avenir Next", size: 16))
         }
+        Divider()
         ASECertView()
-            .frame(maxHeight: 175)
+            .frame(maxHeight: 150)
     }
 }
 
