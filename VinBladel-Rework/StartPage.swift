@@ -14,13 +14,13 @@ struct StartPage: View {
         NavigationStack{
             HStack{
                 VStack {
-                    NavigationLink(destination: InvoiceView()) {
-                        Text("Invoice Test")
-                            .frame(width: 100, height: 25)
-                            .foregroundStyle(.black)
-                            .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
-                            .padding()
-                    }
+//                    NavigationLink(destination: InvoiceView()) {
+//                        Text("Invoice Test")
+//                            .frame(width: 100, height: 25)
+//                            .foregroundStyle(.black)
+//                            .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
+//                            .padding()
+//                    }
                     NavigationLink(destination: Existing()) {
                         Text("Existing")
                             .frame(width: 100, height: 25)
@@ -66,8 +66,9 @@ struct StartPage: View {
             //MARK: Font
             .font(.custom("Avenir Next", size: 16))
         }
+        Divider()
         ASECertView()
-            .frame(maxHeight: 175)
+            .frame(maxHeight: 150)
     }
 }
 

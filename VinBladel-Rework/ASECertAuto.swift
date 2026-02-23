@@ -12,11 +12,12 @@ struct ASECertView: View {
             Image("ASECertified")
                 .resizable()
                 .scaledToFill()
+                .frame(width: 187)
                 .padding(100)
             Image("AutomotiveTech")
                 .resizable()
                 .padding(50)
-                .scaledToFill()
+                .frame(height: 200)
         }
        
         .padding()
