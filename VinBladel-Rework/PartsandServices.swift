@@ -12,6 +12,8 @@ struct PartsandServices: View {
         "Example": Part(name: "Example Part", id: "Example", price: 100)
     ]
     @State var fallback: Part = Part(name: "No parts", id: "fallback", price: 0)
+    @State var showAlert: Bool = false
+    @State var addPart: String = ""
     
     var body: some View {
         NavigationStack {
@@ -56,6 +58,15 @@ struct PartsandServices: View {
                             .font(.custom("Arial", size: 40))
                         .foregroundStyle(.black)                    }
                 }
+                .alert("Add Part", isPresented: $showAlert){
+                    TextField("Search by name", text: $addPart)
+                    Button("Add"){
+                        
+                    }
+                    Button("Cancel"){
+                        showAlert.toggle()
+                    }
+                }
                 .frame(width: 320, height: 88)
                 .padding(.vertical, 8)
                 NavigationLink(destination: Existing()) {
@@ -71,7 +82,16 @@ struct PartsandServices: View {
         
     }
 }
+struct PartSelect: View {
+    var body: some View {
+        Text("Select Part")
+        
+    }
+}
 
+#Preview {
+    PartSelect()
+}
 struct Part: Identifiable, Hashable {
     var name: String
     var id: String
