@@ -16,6 +16,7 @@ struct StartPage: View {
     @State var isPressed4 = false
     @State var isPressed5 = false
     @State var isPressed6 = false
+    @State var move = false
     var body: some View {
         NavigationStack{
             HStack{
@@ -27,6 +28,8 @@ struct StartPage: View {
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
                             .scaleEffect(isPressed1 ? 0.5 : 1.0)
                             .animation(.easeInOut(duration: 0.4), value: isPressed1)
+                            .offset(x: move ? 200 : 0)
+                            .animation(.easeInOut(duration: 4), value: move)
                     }
                     .simultaneousGesture(
                         DragGesture(minimumDistance: 0)
@@ -40,6 +43,8 @@ struct StartPage: View {
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
                             .scaleEffect(isPressed2 ? 0.5 : 1.0)
                             .animation(.easeInOut(duration: 0.4), value: isPressed2)
+                            .offset(x: move ? 200 : 0)
+                            .animation(.easeInOut(duration: 4), value: move)
                     }
                     .simultaneousGesture(
                         DragGesture(minimumDistance: 0)
@@ -54,6 +59,8 @@ struct StartPage: View {
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
                             .scaleEffect(isPressed3 ? 0.5 : 1.0)
                             .animation(.easeInOut(duration: 0.4), value: isPressed3)
+                            .offset(x: move ? 200 : 0)
+                            .animation(.easeInOut(duration: 4), value: move)
                     }
                     .simultaneousGesture(
                         DragGesture(minimumDistance: 0)
@@ -70,6 +77,8 @@ struct StartPage: View {
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
                             .scaleEffect(isPressed4 ? 0.5 : 1.0)
                             .animation(.easeInOut(duration: 0.4), value: isPressed4)
+                            .offset(x: move ? 200 : 0)
+                            .animation(.easeInOut(duration: 4), value: move)
                     }
                     .simultaneousGesture(
                         DragGesture(minimumDistance: 0)
@@ -83,6 +92,8 @@ struct StartPage: View {
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
                             .scaleEffect(isPressed5 ? 0.5 : 1.0)
                             .animation(.easeInOut(duration: 0.4), value: isPressed5)
+                            .offset(x: move ? 200 : 0)
+                            .animation(.easeInOut(duration: 4), value: move)
                     }
                     .simultaneousGesture(
                         DragGesture(minimumDistance: 0)
@@ -96,6 +107,8 @@ struct StartPage: View {
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
                             .scaleEffect(isPressed6 ? 0.5 : 1.0)
                             .animation(.easeInOut(duration: 0.4), value: isPressed6)
+                            .offset(x: move ? 200 : 0)
+                            .animation(.easeInOut(duration: 4), value: move)
                     }
                     .simultaneousGesture(
                         DragGesture(minimumDistance: 0)
