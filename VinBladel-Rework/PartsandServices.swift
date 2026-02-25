@@ -9,118 +9,119 @@ import SwiftUI
 
 struct PartsandServices: View {
     @State var parts: [String: Part] = [
-        "Example": Part(name: "Example Part", id: "Example", price: 100)
+        "Example": Part(name: "Example", id: "Example", price: 100)
     ]
     @State var fallback: Part = Part(name: "No parts", id: "fallback", price: 0)
     @State var showAlert: Bool = false
-    @State var addPart: String = ""
+    
     
     var body: some View {
         NavigationStack {
-            
             List {
-                if let part = parts["Example"] {
+                ForEach(parts.values.sorted(by: { $0.name < $1.name }), id: \._id) { part in
+                    // sorts alphabetically a...z
                     NavigationLink(destination: PartView(parts: $parts, part: part)) {
                         HStack(spacing: 12) {
                             Text(part.name)
                             Spacer()
-                            // wanted to research how to have a binding for a value in a dictionary instead of removing and re adding
                             Stepper(
                                 value: Binding<Int>(
-                                    get: { parts["Example"]?.count ?? 0 },
+                                    get: { parts[part.id]?.count ?? part.count },
                                     set: { newValue in
-                                        var updated = parts["Example"] ?? fallback
+                                        var updated = parts[part.id] ?? part
                                         updated.count = newValue
-                                        parts["Example"] = updated
+                                        parts[part.id] = updated
                                     }
                                 ),
                                 in: 0...20
                             ) {
-                                Text("Count: \(parts["Example"]?.count ?? 0)")
+                                Text("Count: \(parts[part.id]?.count ?? part.count)")
                             }
-                            
                         }
                     }
-                } else {
-                    Text("No Example part available")
                 }
             }
             
             .navigationTitle("Parts & Services")
-            HStack{
-                Button(action: {
-                    
-                }) {
+            HStack(spacing: 12) {
+                NavigationLink(destination: NewPart()) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
                             .foregroundStyle(.orange)
                         Text("Add Part")
                             .font(.custom("Arial", size: 40))
-                        .foregroundStyle(.black)                    }
-                }
-                .alert("Add Part", isPresented: $showAlert){
-                    TextField("Search by name", text: $addPart)
-                    Button("Add"){
-                        
+                            .foregroundStyle(.black)
                     }
-                    Button("Cancel"){
-                        showAlert.toggle()
-                    }
+                    .frame(width: 320, height: 88)
                 }
-                .frame(width: 320, height: 88)
                 .padding(.vertical, 8)
+                
                 NavigationLink(destination: Existing()) {
                     Text("Go to summary")
                         .font(.custom("Arial", size: 40))
                         .frame(width: 320, height: 88)
                         .foregroundStyle(.black)
                         .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
-                        .padding(.vertical, 8)
                 }
+                .padding(.vertical, 8)
             }
         }
-        
     }
-}
-struct PartSelect: View {
-    var body: some View {
-        Text("Select Part")
-        
-    }
-}
-
-#Preview {
-    PartSelect()
-}
-struct Part: Identifiable, Hashable {
-    var name: String
-    var id: String
-    var price: Double
-    var count: Int = 0
-}
-
-struct PartView: View {
-    @Binding var parts: [String: Part]
-    var part: Part
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(part.name)
-                .font(.title2)
-            Text("ID: \(part.id)")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-            Text(String(format: "Price: $%.2f", part.price))
-            Text("Count: \(parts[part.name]?.count ?? part.count)")
-            Spacer()
+    
+    struct NewPart: View {
+        @State var addPart: String = ""
+        var body: some View {
+            TextField("Search by name", text: $addPart)
+            Button("Add"){
+                
+            }
         }
-        .padding()
-        .navigationTitle("Part Details")
     }
-    func costInterpreter(price: Double, count: Int) -> Double{
-        return price * Double(count)
+    
+    struct PartSelect: View {
+        var body: some View {
+            Text("Select Part")
+            
+        }
+    }
+    
+    struct Existing: View {
+        var body: some View {
+            Text("Summary")
+        }
+    }
+    
+    #Preview {
+        PartSelect()
+    }
+    struct Part: Identifiable, Hashable {
+        var name: String
+        var id: String
+        var price: Double
+        var count: Int = 0
+        var _id: String { id }
+    }
+    
+    struct PartView: View {
+        @Binding var parts: [String: Part]
+        var part: Part
+        var body: some View {
+            VStack(alignment: .leading, spacing: 12) {
+                Text(part.name)
+                    .font(.title2)
+                Text("ID: \(part.id)")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                Text(String(format: "Price: $%.2f", part.price))
+                Text("Count: \(parts[part.name]?.count ?? part.count)")
+                Spacer()
+            }
+            .padding()
+            .navigationTitle("Part Details")
+        }
+        func costInterpreter(price: Double, count: Int) -> Double{
+            return price * Double(count)
+        }
     }
 }
 
-#Preview {
-    PartsandServices()
-}
