@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 public struct InvoiceBusinessInfo: Equatable, Identifiable {
     public let id = UUID()
@@ -91,21 +92,51 @@ public struct InvoiceTemplateView: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            header
-            billToAndMetaSection
-            lineItemsSection
-            summarySection
-            if let notes, !notes.isEmpty {
-                notesSection
+        GeometryReader { geo in
+            // A4 points at 72 DPI
+            let portrait = CGSize(width: 595, height: 842)
+            let landscape = CGSize(width: 842, height: 595)
+            let isLandscape = geo.size.width > geo.size.height
+            let target = isLandscape ? landscape : portrait
+            let scale = min(geo.size.width / target.width, geo.size.height / target.height)
+
+            ZStack {
+                Color.clear
+                VStack(alignment: .leading, spacing: 20) {
+                    header
+                    billToAndMetaSection
+                    lineItemsSection
+                    summarySection
+                    if let notes, !notes.isEmpty {
+                        notesSection
+                    }
+                    footerSection
+                    Spacer()
+                }
+                .padding(24)
+                .frame(width: target.width, height: target.height, alignment: .topLeading)
+                .background(.background)
+                .preferredColorScheme(.light)
+                .scaleEffect(scale, anchor: .top)
             }
-            footerSection
-            Spacer()
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
-        .padding(24)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.background)
-        .preferredColorScheme(.light)
+        .padding(.vertical, 4)
+        .padding(.horizontal, 4)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    if let url = PDFGenerator.generate(from: self.frame(width: 595, height: 842)) {
+                        presentShare(for: url)
+                    } else {
+                        presentShareFallback()
+                    }
+                } label: {
+                    Label("Send Invoice", systemImage: "paperplane.fill")
+                        .foregroundStyle(accentColor)
+                }
+            }
+        }
     }
 
     private var header: some View {
@@ -297,9 +328,39 @@ public struct InvoiceTemplateView: View {
         .frame(maxWidth: .infinity, alignment: .center)
         .padding(.top, 8)
     }
+
+    private func presentShare(for url: URL) {
+        let controller = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        // Find a presenting view controller
+        guard let windowScene = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .first,
+              let window = windowScene.keyWindow,
+              let root = window.rootViewController else {
+            return
+        }
+        let presenter = root.presentedViewController ?? root
+        controller.popoverPresentationController?.sourceView = presenter.view
+        controller.popoverPresentationController?.sourceRect = presenter.view.bounds
+        presenter.present(controller, animated: true)
+    }
+
+    private func presentShareFallback() {
+        let controller = UIActivityViewController(activityItems: ["Invoice"], applicationActivities: nil)
+        guard let windowScene = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .first,
+              let window = windowScene.keyWindow,
+              let root = window.rootViewController else {
+            return
+        }
+        let presenter = root.presentedViewController ?? root
+        controller.popoverPresentationController?.sourceView = presenter.view
+        controller.popoverPresentationController?.sourceRect = presenter.view.bounds
+        presenter.present(controller, animated: true)
+    }
 }
 
-// MARK: - Utilities
 
 private let currencyFormatter: NumberFormatter = {
     let f = NumberFormatter()
