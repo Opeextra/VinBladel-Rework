@@ -26,47 +26,47 @@ struct StartPage: View {
                             .foregroundStyle(.black)
                             .frame(width: 100, height: 25)
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
-                            .scaleEffect(isPressed1 ? 0.5 : 1.0)
-                            .animation(.easeInOut(duration: 0.4), value: isPressed1)
+//                            .scaleEffect(isPressed1 ? 0.5 : 1.0)
+//                            .animation(.easeInOut(duration: 0.4), value: isPressed1)
                             .offset(x: move ? 200 : 0)
                             .animation(.easeInOut(duration: 4), value: move)
                     }
-                    .simultaneousGesture(
-                        DragGesture(minimumDistance: 0)
-                            .onChanged { _ in isPressed1 = true }
-                            .onEnded { _ in isPressed1 = false }
-                    )
+//                    .simultaneousGesture(
+//                        DragGesture(minimumDistance: 0)
+//                            .onChanged { _ in isPressed1 = true }
+//                            .onEnded { _ in isPressed1 = false }
+//                    )
                     NavigationLink(destination: Existing()) {
                         Text("Existing")
                             .foregroundStyle(.black)
                             .frame(width: 100, height: 25)
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
-                            .scaleEffect(isPressed2 ? 0.5 : 1.0)
-                            .animation(.easeInOut(duration: 0.4), value: isPressed2)
+//                            .scaleEffect(isPressed2 ? 0.5 : 1.0)
+//                            .animation(.easeInOut(duration: 0.4), value: isPressed2)
                             .offset(x: move ? 200 : 0)
                             .animation(.easeInOut(duration: 4), value: move)
                     }
-                    .simultaneousGesture(
-                        DragGesture(minimumDistance: 0)
-                            .onChanged { _ in isPressed2 = true }
-                            .onEnded { _ in isPressed2 = false }
-                    )
+//                    .simultaneousGesture(
+//                        DragGesture(minimumDistance: 0)
+//                            .onChanged { _ in isPressed2 = true }
+//                            .onEnded { _ in isPressed2 = false }
+//                   )
                    
                     NavigationLink(destination: InProgress()) {
                         Text("In Progress")
                             .foregroundStyle(.black)
                             .frame(width: 100, height: 25)
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
-                            .scaleEffect(isPressed3 ? 0.5 : 1.0)
-                            .animation(.easeInOut(duration: 0.4), value: isPressed3)
+//                            .scaleEffect(isPressed3 ? 0.5 : 1.0)
+//                            .animation(.easeInOut(duration: 0.4), value: isPressed3)
                             .offset(x: move ? 200 : 0)
                             .animation(.easeInOut(duration: 4), value: move)
                     }
-                    .simultaneousGesture(
-                        DragGesture(minimumDistance: 0)
-                            .onChanged { _ in isPressed3 = true }
-                            .onEnded { _ in isPressed3 = false }
-                    )
+//                    .simultaneousGesture(
+//                        DragGesture(minimumDistance: 0)
+//                            .onChanged { _ in isPressed3 = true }
+//                            .onEnded { _ in isPressed3 = false }
+//                    )
                     
                 }
                 VStack {
@@ -75,46 +75,46 @@ struct StartPage: View {
                             .foregroundStyle(.black)
                             .frame(width: 100, height: 25)
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
-                            .scaleEffect(isPressed4 ? 0.5 : 1.0)
-                            .animation(.easeInOut(duration: 0.4), value: isPressed4)
+//                            .scaleEffect(isPressed4 ? 0.5 : 1.0)
+//                            .animation(.easeInOut(duration: 0.4), value: isPressed4)
                             .offset(x: move ? 200 : 0)
                             .animation(.easeInOut(duration: 4), value: move)
                     }
-                    .simultaneousGesture(
-                        DragGesture(minimumDistance: 0)
-                            .onChanged { _ in isPressed4 = true }
-                            .onEnded { _ in isPressed4 = false }
-                    )
+//                    .simultaneousGesture(
+//                        DragGesture(minimumDistance: 0)
+//                            .onChanged { _ in isPressed4 = true }
+//                            .onEnded { _ in isPressed4 = false }
+//                    )
                     NavigationLink(destination: AddVINView(scannedVIN: $scannedVin)) {
                         Text("Scan Vin")
                             .foregroundStyle(.black)
                             .frame(width: 100, height: 25)
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
-                            .scaleEffect(isPressed5 ? 0.5 : 1.0)
-                            .animation(.easeInOut(duration: 0.4), value: isPressed5)
+//                            .scaleEffect(isPressed5 ? 0.5 : 1.0)
+//                            .animation(.easeInOut(duration: 0.4), value: isPressed5)
                             .offset(x: move ? 200 : 0)
                             .animation(.easeInOut(duration: 4), value: move)
                     }
-                    .simultaneousGesture(
-                        DragGesture(minimumDistance: 0)
-                            .onChanged { _ in isPressed5 = true }
-                            .onEnded { _ in isPressed5 = false }
-                    )
+//                    .simultaneousGesture(
+//                        DragGesture(minimumDistance: 0)
+//                            .onChanged { _ in isPressed5 = true }
+//                            .onEnded { _ in isPressed5 = false }
+//                    )
                     NavigationLink(destination: PartsandServices()) {
                         Text("Services")
                             .foregroundStyle(.black)
                             .frame(width: 100, height: 25)
                             .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
-                            .scaleEffect(isPressed6 ? 0.5 : 1.0)
-                            .animation(.easeInOut(duration: 0.4), value: isPressed6)
+//                            .scaleEffect(isPressed6 ? 0.5 : 1.0)
+//                            .animation(.easeInOut(duration: 0.4), value: isPressed6)
                             .offset(x: move ? 200 : 0)
                             .animation(.easeInOut(duration: 4), value: move)
                     }
-                    .simultaneousGesture(
-                        DragGesture(minimumDistance: 0)
-                            .onChanged { _ in isPressed6 = true }
-                            .onEnded { _ in isPressed6 = false }
-                    )
+//                    .simultaneousGesture(
+//                        DragGesture(minimumDistance: 0)
+//                            .onChanged { _ in isPressed6 = true }
+//                            .onEnded { _ in isPressed6 = false }
+//                    )
                 }
             }
             .scaleEffect(3)
