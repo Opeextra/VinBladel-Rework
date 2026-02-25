@@ -22,9 +22,8 @@ struct ActivityViewController: UIViewControllerRepresentable {
 
 public struct InvoiceShareView: View {
     private let shareItems: [Any]
-
-    @State private var showActivity = false
-
+    @Environment(\.dismiss) private var dismiss
+    
     public init(data: Data, filename: String, typeHint: String? = nil) {
         if let url = Self.createTemporaryFile(with: data, filename: filename) {
             self.shareItems = [url]
@@ -32,87 +31,56 @@ public struct InvoiceShareView: View {
             self.shareItems = [data]
         }
     }
-
+    
     public init(url: URL) {
         self.shareItems = [url]
     }
-
+    
     public init(string: String) {
         self.shareItems = [string]
     }
-
+    
     public var body: some View {
-        HStack {
-            if #available(iOS 16.0, *) {
-                if shareItems.count == 1, let url = shareItems.first as? URL {
-                    ShareLink(item: url)
-                } else {
-                    Button {
-                        showActivity = true
-                    } label: {
-                        Label("Share", systemImage: "square.and.arrow.up")
-                    }
-                    .buttonStyle(PressableButtonStyle())
-                }
-            } else {
-                Button {
-                    showActivity = true
-                } label: {
-                    Label("Share", systemImage: "square.and.arrow.up")
-                }
-                .buttonStyle(PressableButtonStyle())
+        // Present the share sheet immediately and dismiss when done
+        Color.clear
+            .onAppear {
+                presentShare()
             }
-
-            Button {
-                showActivity = true
-            } label: {
-                Label("More…", systemImage: "square.and.arrow.up")
+            .accessibilityHidden(true)
+    }
+    
+    private func presentShare() {
+        let controller = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
+        controller.completionWithItemsHandler = { _, _, _, _ in
+            dismiss()
+        }
+        
+        // Find a presenting view controller
+        guard let windowScene = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .first,
+              let window = windowScene.keyWindow,
+              let root = window.rootViewController else {
+            dismiss()
+            return
+        }
+        
+        // If there's already a presented controller, present from it
+                let presenter = root.presentedViewController ?? root
+                controller.popoverPresentationController?.sourceView = presenter.view
+                controller.popoverPresentationController?.sourceRect = presenter.view.bounds
+                presenter.present(controller, animated: true)
             }
-            .buttonStyle(PressableButtonStyle())
-            .sheet(isPresented: $showActivity) {
-                ActivityViewController(activityItems: shareItems, applicationActivities: nil)
+        
+        private func createTemporaryFile(with data: Data, filename: String) -> URL? {
+            let caches = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
+            guard let cacheDir = caches else { return nil }
+            let tempFileURL = cacheDir.appendingPathComponent(filename)
+            do {
+                try data.write(to: tempFileURL, options: .atomic)
+                return tempFileURL
+            } catch {
+                return nil
             }
         }
     }
-
-    private static func createTemporaryFile(with data: Data, filename: String) -> URL? {
-        let caches = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
-        guard let cacheDir = caches else { return nil }
-        let tempFileURL = cacheDir.appendingPathComponent(filename)
-        do {
-            try data.write(to: tempFileURL, options: .atomic)
-            return tempFileURL
-        } catch {
-            return nil
-        }
-    }
-}
-
-#Preview {
-    // Prepare a temporary PDF URL for preview purposes
-    let tempPDF: URL? = {
-        let caches = try? FileManager.default.url(for: .cachesDirectory,
-                                                  in: .userDomainMask,
-                                                  appropriateFor: nil,
-                                                  create: true)
-        guard let base = caches else { return nil }
-        let url = base.appendingPathComponent("sample.pdf")
-        // create a dummy PDF file if not exists
-        if !FileManager.default.fileExists(atPath: url.path) {
-            let dummyPDFData = Data([0x25, 0x50, 0x44, 0x46, 0x2d]) // "%PDF-" header
-            try? dummyPDFData.write(to: url)
-        }
-        return url
-    }()
-
-    return VStack(spacing: 20) {
-        InvoiceShareView(string: "This is a sample invoice text to share.")
-        if let tempPDF {
-            InvoiceShareView(url: tempPDF)
-        } else {
-            // Fallback to a string share if temp URL couldn't be created
-            InvoiceShareView(string: "Fallback: could not create temp PDF.")
-        }
-    }
-    .padding()
-}
