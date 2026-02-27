@@ -11,7 +11,6 @@ struct PartsandServices: View {
     @State var parts: [String: Part] = [
         "Example": Part(name: "Example", id: "Example", price: 100)
     ]
-    @State var fallback: Part = Part(name: "No parts", id: "fallback", price: 0)
     @State var showAlert: Bool = false
     
     
@@ -44,7 +43,7 @@ struct PartsandServices: View {
             
             .navigationTitle("Parts & Services")
             HStack(spacing: 12) {
-                NavigationLink(destination: NewPart()) {
+                NavigationLink(destination: NewPart(parts: $parts)) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
                             .foregroundStyle(.orange)
@@ -70,29 +69,22 @@ struct PartsandServices: View {
     
     struct NewPart: View {
         @State var addPart: String = ""
+        @State var price: String = ""
+        @Binding var parts: [String: Part]
         var body: some View {
             TextField("Search by name", text: $addPart)
+            TextField("Enter Price", text: $price) //MARK: Change this when Firebase is set up
             Button("Add"){
-                
+                parts[addPart] = Part(name: addPart, id: addPart, price: Double(price) ?? 0)
             }
         }
     }
     
-    struct PartSelect: View {
-        var body: some View {
-            Text("Select Part")
-            
-        }
-    }
     
     struct Existing: View {
         var body: some View {
             Text("Summary")
         }
-    }
-    
-    #Preview {
-        PartSelect()
     }
     struct Part: Identifiable, Hashable {
         var name: String
