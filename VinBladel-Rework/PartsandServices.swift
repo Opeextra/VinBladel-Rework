@@ -7,9 +7,16 @@
 
 import SwiftUI
 
+struct ServicePart: Identifiable, Hashable {
+    var name: String
+    var id: String
+    var price: Double
+    var count: Int = 0
+}
+
 struct PartsandServices: View {
-    @State var parts: [String: Part] = [
-        "Example": Part(name: "Example", id: "Example", price: 100)
+    @State var parts: [String: ServicePart] = [
+        "Example": ServicePart(name: "Example", id: "Example", price: 100)
     ]
     @State var showAlert: Bool = false
     
@@ -17,7 +24,7 @@ struct PartsandServices: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(parts.values.sorted(by: { $0.name < $1.name }), id: \._id) { part in
+                ForEach(parts.values.sorted(by: { $0.name < $1.name }), id: \.id) { part in
                     // sorts alphabetically a...z
                     NavigationLink(destination: PartView(parts: $parts, part: part)) {
                         HStack(spacing: 12) {
@@ -70,12 +77,12 @@ struct PartsandServices: View {
     struct NewPart: View {
         @State var addPart: String = ""
         @State var price: String = ""
-        @Binding var parts: [String: Part]
+        @Binding var parts: [String: ServicePart]
         var body: some View {
             TextField("Search by name", text: $addPart)
             TextField("Enter Price", text: $price) //MARK: Change this when Firebase is set up
             Button("Add"){
-                parts[addPart] = Part(name: addPart, id: addPart, price: Double(price) ?? 0)
+                parts[addPart] = ServicePart(name: addPart, id: addPart, price: Double(price) ?? 0)
             }
         }
     }
@@ -86,17 +93,10 @@ struct PartsandServices: View {
             Text("Summary")
         }
     }
-    struct Part: Identifiable, Hashable {
-        var name: String
-        var id: String
-        var price: Double
-        var count: Int = 0
-        var _id: String { id }
-    }
     
     struct PartView: View {
-        @Binding var parts: [String: Part]
-        var part: Part
+        @Binding var parts: [String: ServicePart]
+        var part: ServicePart
         var body: some View {
             VStack(alignment: .leading, spacing: 12) {
                 Text(part.name)
@@ -105,7 +105,7 @@ struct PartsandServices: View {
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                 Text(String(format: "Price: $%.2f", part.price))
-                Text("Count: \(parts[part.name]?.count ?? part.count)")
+                Text("Count: \(parts[part.id]?.count ?? part.count)")
                 Spacer()
             }
             .padding()
