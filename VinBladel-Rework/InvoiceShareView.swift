@@ -66,21 +66,21 @@ public struct InvoiceShareView: View {
         }
         
         // If there's already a presented controller, present from it
-                let presenter = root.presentedViewController ?? root
-                controller.popoverPresentationController?.sourceView = presenter.view
-                controller.popoverPresentationController?.sourceRect = presenter.view.bounds
-                presenter.present(controller, animated: true)
-            }
-        
-        private func createTemporaryFile(with data: Data, filename: String) -> URL? {
-            let caches = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
-            guard let cacheDir = caches else { return nil }
-            let tempFileURL = cacheDir.appendingPathComponent(filename)
-            do {
-                try data.write(to: tempFileURL, options: .atomic)
-                return tempFileURL
-            } catch {
-                return nil
-            }
+        let presenter = root.presentedViewController ?? root
+        controller.popoverPresentationController?.sourceView = presenter.view
+        controller.popoverPresentationController?.sourceRect = presenter.view.bounds
+        presenter.present(controller, animated: true)
+    }
+    
+    private static func createTemporaryFile(with data: Data, filename: String) -> URL? {
+        let caches = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
+        guard let cacheDir = caches else { return nil }
+        let tempFileURL = cacheDir.appendingPathComponent(filename)
+        do {
+            try data.write(to: tempFileURL, options: .atomic)
+            return tempFileURL
+        } catch {
+            return nil
         }
     }
+}

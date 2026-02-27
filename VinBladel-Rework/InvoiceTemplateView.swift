@@ -1,5 +1,6 @@
 import SwiftUI
 import UIKit
+import Combine
 
 public struct InvoiceBusinessInfo: Equatable, Identifiable {
     public let id = UUID()
@@ -65,29 +66,11 @@ public struct InvoiceMeta: Equatable {
 }
 
 public struct InvoiceTemplateView: View {
-    public let business: InvoiceBusinessInfo
-    public let customer: InvoiceCustomerInfo
-    public let items: [InvoiceItem]
-    public let summary: InvoiceSummary
-    public let meta: InvoiceMeta
-    public let notes: String?
+    @ObservedObject public var viewModel: InvoiceViewModel
     public let accentColor: Color
 
-    public init(
-        business: InvoiceBusinessInfo,
-        customer: InvoiceCustomerInfo,
-        items: [InvoiceItem],
-        summary: InvoiceSummary,
-        meta: InvoiceMeta,
-        notes: String? = nil,
-        accentColor: Color = .orange
-    ) {
-        self.business = business
-        self.customer = customer
-        self.items = items
-        self.summary = summary
-        self.meta = meta
-        self.notes = notes
+    public init(viewModel: InvoiceViewModel, accentColor: Color = .orange) {
+        self.viewModel = viewModel
         self.accentColor = accentColor
     }
 
@@ -107,7 +90,7 @@ public struct InvoiceTemplateView: View {
                     billToAndMetaSection
                     lineItemsSection
                     summarySection
-                    if let notes, !notes.isEmpty {
+                    if let notes = viewModel.notes, !notes.isEmpty {
                         notesSection
                     }
                     footerSection
@@ -142,10 +125,10 @@ public struct InvoiceTemplateView: View {
     private var header: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 3) {
-                Text(business.name)
+                Text(viewModel.business.name)
                     .font(.title3.weight(.bold))
                     .foregroundStyle(.primary)
-                ForEach(business.addressLines, id: \.self) { line in
+                ForEach(viewModel.business.addressLines, id: \.self) { line in
                     Text(line)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
@@ -177,15 +160,15 @@ public struct InvoiceTemplateView: View {
                 Text("Bill To")
                     .font(.footnote.weight(.semibold))
                     .foregroundStyle(accentColor)
-                Text(customer.name)
+                Text(viewModel.customer.name)
                     .font(.headline)
                     .foregroundStyle(.primary)
-                ForEach(customer.addressLines, id: \.self) { line in
+                ForEach(viewModel.customer.addressLines, id: \.self) { line in
                     Text(line)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
-                if let phone = customer.phone, !phone.isEmpty {
+                if let phone = viewModel.customer.phone, !phone.isEmpty {
                     Text(phone)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
@@ -193,9 +176,9 @@ public struct InvoiceTemplateView: View {
             }
             Spacer()
             VStack(alignment: .leading, spacing: 6) {
-                labelValue("Invoice #", meta.number)
-                labelValue("Date", formatDate(meta.date))
-                if let due = meta.dueDate {
+                labelValue("Invoice #", viewModel.meta.number)
+                labelValue("Date", formatDate(viewModel.meta.date))
+                if let due = viewModel.meta.dueDate {
                     labelValue("Due Date", formatDate(due))
                 }
             }
@@ -239,7 +222,7 @@ public struct InvoiceTemplateView: View {
                 .overlay(Rectangle().frame(height: 1).foregroundStyle(accentColor.opacity(0.3)), alignment: .bottom)
                 .padding(.vertical, 6)
 
-            ForEach(items) { item in
+            ForEach(viewModel.items) { item in
                 HStack(spacing: 0) {
                     Text(item.description)
                         .font(.footnote)
@@ -267,11 +250,11 @@ public struct InvoiceTemplateView: View {
 
     private var summarySection: some View {
         VStack(spacing: 8) {
-            summaryLine(label: "Subtotal", amount: summary.subtotal)
-            summaryLine(label: "Tax", amount: summary.tax)
-            summaryLine(label: "Discount", amount: summary.discount)
+            summaryLine(label: "Subtotal", amount: viewModel.summary.subtotal)
+            summaryLine(label: "Tax", amount: viewModel.summary.tax)
+            summaryLine(label: "Discount", amount: viewModel.summary.discount)
             Divider()
-            summaryLine(label: "Total", amount: summary.total, isBold: true, fontSize: 20, tint: accentColor)
+            summaryLine(label: "Total", amount: viewModel.summary.total, isBold: true, fontSize: 20, tint: accentColor)
         }
         .frame(maxWidth: 300, alignment: .trailing)
         .padding(14)
@@ -304,7 +287,7 @@ public struct InvoiceTemplateView: View {
             Text("Notes")
                 .font(.footnote.weight(.semibold))
                 .foregroundStyle(accentColor)
-            Text(notes ?? "")
+            Text(viewModel.notes ?? "")
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
@@ -314,12 +297,12 @@ public struct InvoiceTemplateView: View {
     private var footerSection: some View {
         VStack(spacing: 4) {
             Divider().foregroundStyle(.quaternary)
-            if let email = business.email, !email.isEmpty {
+            if let email = viewModel.business.email, !email.isEmpty {
                 Text(email)
                     .font(.caption2)
                     .foregroundStyle(accentColor)
             }
-            if let phone = business.phone, !phone.isEmpty {
+            if let phone = viewModel.business.phone, !phone.isEmpty {
                 Text(phone)
                     .font(.caption2)
                     .foregroundStyle(accentColor)
@@ -361,6 +344,30 @@ public struct InvoiceTemplateView: View {
     }
 }
 
+public final class InvoiceViewModel: ObservableObject {
+    @Published public var business: InvoiceBusinessInfo
+    @Published public var customer: InvoiceCustomerInfo
+    @Published public var items: [InvoiceItem]
+    @Published public var summary: InvoiceSummary
+    @Published public var meta: InvoiceMeta
+    @Published public var notes: String?
+
+    public init(
+        business: InvoiceBusinessInfo,
+        customer: InvoiceCustomerInfo,
+        items: [InvoiceItem],
+        summary: InvoiceSummary,
+        meta: InvoiceMeta,
+        notes: String? = nil
+    ) {
+        self.business = business
+        self.customer = customer
+        self.items = items
+        self.summary = summary
+        self.meta = meta
+        self.notes = notes
+    }
+}
 
 private let currencyFormatter: NumberFormatter = {
     let f = NumberFormatter()
@@ -384,6 +391,7 @@ private func formatDate(_ date: Date) -> String {
 }
 
 #Preview {
+    // Sample data for preview purposes only
     let business = InvoiceBusinessInfo(
         name: "Acme Corporation",
         addressLines: [
@@ -418,17 +426,18 @@ private func formatDate(_ date: Date) -> String {
 
     let meta = InvoiceMeta(number: "2026-0023", date: Date(), dueDate: Calendar.current.date(byAdding: .day, value: 30, to: Date()))
 
-    InvoiceTemplateView(
+    let vm = InvoiceViewModel(
         business: business,
         customer: customer,
         items: items,
         summary: summary,
         meta: meta,
-        notes: "Thank you for your business. Please remit payment within 30 days.",
-        accentColor: .orange
+        notes: "Thank you for your business. Please remit payment within 30 days."
     )
-    .frame(width: 595, height: 842)
-    .background(.background)
-    .preferredColorScheme(.light)
+
+    return InvoiceTemplateView(viewModel: vm, accentColor: .orange)
+        .frame(width: 595, height: 842)
+        .background(.background)
+        .preferredColorScheme(.light)
 }
 
