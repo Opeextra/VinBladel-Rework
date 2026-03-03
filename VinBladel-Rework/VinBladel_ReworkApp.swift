@@ -6,28 +6,42 @@
 //
 
 import SwiftUI
+import FirebaseCore
+
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    FirebaseApp.configure()
+
+    return true
+  }
+}
 
 @main
 struct VinBladel_ReworkApp: App {
-    @State var lauchScreen: Bool = false
+    @State var launchScreen: Bool = false
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
-            if lauchScreen == true {
-                StartPage()
-//                ContentView()
-                    .transition(.slide)
-            } else {
-                loadingAnimation()
-                    .onAppear(){
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            withAnimation() {
-                                self.lauchScreen = true
-                                // Make it so the firebase realtime database loads during this time
+            Group {
+                if launchScreen == true {
+                    StartPage()
+                        .transition(.slide)
+                } else {
+                    loadingAnimation()
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                withAnimation {
+                                    self.launchScreen = true
+                                    // Make it so the firebase realtime database loads during this time
+                                }
                             }
                         }
-                    }
+                }
             }
+            .preferredColorScheme(.light)
         }
     }
+        
 }
