@@ -60,7 +60,7 @@ struct PartsandServices: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
                             .foregroundStyle(.orange)
-                        Text("Add Part")
+                        Text("Add Custom Part")
                             .font(.custom("Arial", size: 40))
                             .foregroundStyle(.black)
                     }
@@ -85,7 +85,7 @@ struct PartsandServices: View {
         @State var price: String = ""
         @Binding var parts: [String: ServicePart]
         var body: some View {
-            TextField("Search by name", text: $addPart)
+            TextField("Enter Name", text: $addPart)
             TextField("Enter Price", text: $price).keyboardType(.decimalPad)
             Button("Add"){
                 parts[addPart] = ServicePart(name: addPart, id: addPart, price: Double(price) ?? 0)
