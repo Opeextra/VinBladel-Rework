@@ -68,10 +68,17 @@ public struct InvoiceMeta: Equatable {
 public struct InvoiceTemplateView: View {
     @ObservedObject public var viewModel: InvoiceViewModel
     public let accentColor: Color
+    @State private var isExporting: Bool = false
 
     public init(viewModel: InvoiceViewModel, accentColor: Color = .orange) {
         self.viewModel = viewModel
         self.accentColor = accentColor
+    }
+
+    private var selectedMechanic: String? {
+        guard viewModel.mechanics.indices.contains(viewModel.selectedMechanicIndex) else { return nil }
+        let name = viewModel.mechanics[viewModel.selectedMechanicIndex]
+        return name == "" ? nil : name
     }
 
     public var body: some View {
@@ -109,10 +116,18 @@ public struct InvoiceTemplateView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    if let url = PDFGenerator.generate(from: self.frame(width: 595, height: 842)) {
-                        presentShare(for: url)
-                    } else {
-                        presentShareFallback()
+                    // Enter export mode so the picker is hidden and only text is shown
+                    isExporting = true
+                    // Ensure the view updates before capturing
+                    DispatchQueue.main.async {
+                        let pdfView = self.frame(width: 595, height: 842)
+                        if let url = PDFGenerator.generate(from: pdfView) {
+                            presentShare(for: url)
+                        } else {
+                            presentShareFallback()
+                        }
+                        // Exit export mode after generating/presenting
+                        isExporting = false
                     }
                 } label: {
                     Label("Send Invoice", systemImage: "paperplane.fill")
@@ -180,6 +195,34 @@ public struct InvoiceTemplateView: View {
                 labelValue("Date", formatDate(viewModel.meta.date))
                 if let due = viewModel.meta.dueDate {
                     labelValue("Due Date", formatDate(due))
+                }
+                Divider().opacity(0.3)
+//                Text("Mechanic")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(accentColor)
+                if isExporting {
+                    if let mech = selectedMechanic {
+                        labelValue("Mechanic", mech)
+                    } else {
+                        Text("Not specified")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                } else {
+                    Picker("Mechanic", selection: $viewModel.selectedMechanicIndex) {
+                        ForEach(Array(viewModel.mechanics.enumerated()), id: \.offset) { idx, name in
+                            Text(name).tag(idx)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .frame(maxWidth: 180, alignment: .leading)
+                    if let mech = selectedMechanic {
+                        labelValue("Mechanic", mech)
+                    } else {
+                        Text("Please select a mechanic")
+                            .font(.caption2)
+                            .foregroundStyle(.red)
+                    }
                 }
             }
             .font(.footnote)
@@ -351,6 +394,8 @@ public final class InvoiceViewModel: ObservableObject {
     @Published public var summary: InvoiceSummary
     @Published public var meta: InvoiceMeta
     @Published public var notes: String?
+    @Published public var mechanics: [String]
+    @Published public var selectedMechanicIndex: Int
 
     public init(
         business: InvoiceBusinessInfo,
@@ -358,7 +403,9 @@ public final class InvoiceViewModel: ObservableObject {
         items: [InvoiceItem],
         summary: InvoiceSummary,
         meta: InvoiceMeta,
-        notes: String? = nil
+        notes: String? = nil,
+        mechanics: [String] = ["Select mechanic", "Alex Johnson", "Brianna Lee", "Carlos Ramirez", "Dana Patel"],
+        selectedMechanicIndex: Int = 0
     ) {
         self.business = business
         self.customer = customer
@@ -366,6 +413,8 @@ public final class InvoiceViewModel: ObservableObject {
         self.summary = summary
         self.meta = meta
         self.notes = notes
+        self.mechanics = mechanics
+        self.selectedMechanicIndex = selectedMechanicIndex
     }
 }
 
@@ -432,7 +481,9 @@ private func formatDate(_ date: Date) -> String {
         items: items,
         summary: summary,
         meta: meta,
-        notes: "Thank you for your business. Please remit payment within 30 days."
+        notes: "Thank you for your business. Please remit payment within 30 days.",
+        mechanics: ["Select mechanic", "Alex Johnson", "Brianna Lee", "Carlos Ramirez", "Dana Patel"],
+        selectedMechanicIndex: 1
     )
 
     return InvoiceTemplateView(viewModel: vm, accentColor: .orange)
