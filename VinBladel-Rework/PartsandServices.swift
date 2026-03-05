@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ServicePart: Identifiable, Hashable {
+    
     var name: String
     var id: String
     var price: Double
@@ -19,12 +20,18 @@ struct PartsandServices: View {
         "Example": ServicePart(name: "Example", id: "Example", price: 100)
     ]
     @State var showAlert: Bool = false
+    @State private var searchText: String = ""
     
     
     var body: some View {
         NavigationStack {
             List {
-                ForEach(parts.values.sorted(by: { $0.name < $1.name }), id: \.id) { part in
+                ForEach(
+                    parts.values
+                        .filter { searchText.isEmpty || $0.name.localizedCaseInsensitiveContains(searchText) }
+                        .sorted(by: { $0.name < $1.name }),
+                    id: \.id
+                ) { part in
                     // sorts alphabetically a...z
                     NavigationLink(destination: PartView(parts: $parts, part: part)) {
                         HStack(spacing: 12) {
@@ -46,6 +53,7 @@ struct PartsandServices: View {
                         }
                     }
                 }
+                .searchable(text: $searchText, prompt: "Search Parts")
             }
             
             .navigationTitle("Parts & Services")
