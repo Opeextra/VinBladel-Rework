@@ -16,9 +16,7 @@ struct ServicePart: Identifiable, Hashable {
 }
 
 struct PartsandServices: View {
-    @State var parts: [String: ServicePart] = [
-        "Example": ServicePart(name: "Example", id: "Example", price: 100)
-    ]
+    @State var parts: [String: ServicePart] = ["2 Wheel Alignment": ServicePart(name: "2 Wheel Alignment", id: "2 Wheel Alignment", price: 25), "4 Wheel Alignment": ServicePart(name: "4 Wheel Alignment", id: "4 Wheel Alignment", price: 50), "Alignment Check": ServicePart(name: "Alignment Check", id: "Alignment Check", price: 0), "Reset Stability Control Settings": ServicePart(name: "Reset Stability Control Settings", id: "Reset Stability Control", price: 10), "Battery Charge": ServicePart(name: "Battery Charge", id: "Battery Charge", price: 0), "Battery Replacement": ServicePart(name: "Battery Replacement", id: "Battery Replacement", price: 10), "Battery Test": ServicePart(name: "Battery Test", id: "Battery Test", price: 0), "Brake Fluid Flush": ServicePart(name: "Brake Fluid Flush", id: "Brake Fluid Flush", price: 5), "Brake Fluid Test": ServicePart(name: "Brake Fluid Test", id: "Brake Fluid Test", price: 5), "Brake Inspection": ServicePart(name: "Brake Inspection", id: "Brake Inspection", price: 0), "Braking System Flat Rate Donation": ServicePart(name: "Braking System Flat Rate Donation", id: "Braking System Flat Rate Donation", price: 25), "Front Pads and Rotors": ServicePart(name: "Front Pads and Rotors", id: "Front Pads and Rotors", price: 25), "Wheel Speed Sensor Replacement": ServicePart(name: "Wheel Speed Sensor Replacement", id: "Wheel Speed Sensor Replacement", price: 0),"Alternator Test": ServicePart(name: "Alternator Test", id: "Alternator Test", price: 0),"Charging System Flat Rate Donation": ServicePart(name: "Charging System Flat Rate Donation", id: "Charging System Flat Rate Donation", price: 25), "1 Gal Coolant": ServicePart(name: "1 Gal Coolant", id: "1 Gal Coolant", price: 12.99), "Coolant Flush": ServicePart(name: "Coolant Flush", id: "Coolant Flush", price: 25)]
     @State var showAlert: Bool = false
     @State private var searchText: String = ""
     
@@ -53,8 +51,8 @@ struct PartsandServices: View {
                         }
                     }
                 }
-                .searchable(text: $searchText, prompt: "Search Parts")
             }
+            .searchable(text: $searchText, prompt: "Search Parts")
             
             .navigationTitle("Parts & Services")
             HStack(spacing: 12) {
@@ -88,7 +86,7 @@ struct PartsandServices: View {
         @Binding var parts: [String: ServicePart]
         var body: some View {
             TextField("Search by name", text: $addPart)
-            TextField("Enter Price", text: $price) //MARK: Change this when Firebase is set up
+            TextField("Enter Price", text: $price).keyboardType(.decimalPad)
             Button("Add"){
                 parts[addPart] = ServicePart(name: addPart, id: addPart, price: Double(price) ?? 0)
             }
