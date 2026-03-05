@@ -20,19 +20,6 @@ struct StartPage: View {
         NavigationStack{
             HStack{
                 VStack {
-                    NavigationLink(destination: InvoiceView()) {
-                        Text("Invoice Test")
-                            .foregroundStyle(.black)
-                            .frame(width: 100, height: 25)
-                            .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
-                            .scaleEffect(isPressed1 ? 0.92 : 1.0)
-                            .animation(.spring(response: 0.25, dampingFraction: 0.6, blendDuration: 0.2), value: isPressed1)
-                    }
-                    .simultaneousGesture(
-                        DragGesture(minimumDistance: 0)
-                            .onChanged { _ in isPressed1 = true }
-                            .onEnded { _ in isPressed1 = false }
-                    )
                     NavigationLink(destination: Existing()) {
                         Text("Existing")
                             .foregroundStyle(.black)

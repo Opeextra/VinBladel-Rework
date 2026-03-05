@@ -62,7 +62,7 @@ struct PartsandServices: View {
                 }
                 .padding(.vertical, 8)
                 
-                NavigationLink(destination: Existing()) {
+                NavigationLink(destination: InvoiceView()) {
                     Text("Go to summary")
                         .font(.custom("Arial", size: 40))
                         .frame(width: 320, height: 88)
