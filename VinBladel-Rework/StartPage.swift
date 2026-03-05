@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import UIKit
+import MessageUI
+
 
 struct StartPage: View {
 //    @Environment(DatabaseViewModel.self) private var viewModel
