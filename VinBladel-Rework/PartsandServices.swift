@@ -66,7 +66,25 @@ struct PartsandServices: View {
         "Valvoline Synthetic 5w_20": ServicePart(name: "Valvoline Synthetic 5w_20", id: "Valvoline Synthetic 5w_20", price: 4.46),
         "Valvoline Synthetic 5w_30": ServicePart(name: "Valvoline Synthetic 5w_30", id: "Valvoline Synthetic 5w_30", price: 4.46),
         "Valvoline Synthetic 5w_30 EURO": ServicePart(name: "Valvoline Synthetic 5w_30 EURO", id: "Valvoline Synthetic 5w_30 EURO", price: 6.38),
-//        "Starting System Donation": ServicePart(name: "", id: <#T##String#>, price: <#T##Double#>)
+        "Starting System Donation": ServicePart(name: "Starting System Donation", id: "Starting System Donation", price: 25),
+        "Starting System Test": ServicePart(name: "Starting System Test", id: "Starting System Test", price: 0),
+        "Quick Strut Installation": ServicePart(name: "Quick Strut Installation", id: "Quick Strut Installation", price: 0),
+        "Replace Springs": ServicePart(name: "Replace Springs", id: "Replace Springs", price: 0),
+        "Replace Strut-Shock": ServicePart(name: "Replace Strut-Shock", id: "Replace Strut-Shock", price: 0),
+        "Replace Sway Bar  Endlinks": ServicePart(name: "Replace Sway Bar  Endlinks", id: "Replace Sway Bar  Endlinks", price: 0),
+        "Suspension Diagnostic": ServicePart(name: "Suspension Diagnostic", id: "Suspension Diagnostic", price: 0),
+        "Suspension Donation": ServicePart(name: "Suspension Donation", id: "Suspension Donation", price: 25),
+        "Mount and Balance": ServicePart(name: "Mount and Balance", id: "Mount and Balance", price: 10),
+        "Replace TPMS Sensor": ServicePart(name: "Replace TPMS Sensor", id: "Replace TPMS Sensor", price: 5),
+        "Reset TPMS System": ServicePart(name: "Reset TPMS System", id: "Reset TPMS System", price: 15),
+        "TPMS Sensor": ServicePart(name: "TPMS Sensor", id: "TPMS Sensor", price: 0),
+        "Tire Inspection": ServicePart(name: "Tire Inspection", id: "Tire Inspection", price: 0),
+        "Tire Recycling": ServicePart(name: "Tire Recycling", id: "Tire Recycling", price: 5),
+        "Tire Repair": ServicePart(name: "Tire Repair", id: "Tire Repair", price: 15),
+        "Tire Rotation": ServicePart(name: "Tire Rotation", id: "Tire Rotation", price: 20),
+        "Valve Stem Replacement": ServicePart(name: "Valve Stem Replacement", id: "Valve Stem Replacement", price: 2.5),
+        "Wheel Bearing Replacement": ServicePart(name: "Wheel Bearing Replacement", id: "Wheel Bearing Replacement", price: 0),
+        "Wheel and Tire Donation": ServicePart(name: "Wheel and Tire Donation", id: "Wheel and Tire Donation", price: 25)
     ]
     @State var showAlert: Bool = false
     @State private var searchText: String = ""
