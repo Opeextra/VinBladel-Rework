@@ -66,7 +66,12 @@ struct PartsandServices: View {
         "Valvoline Synthetic 5w_20": ServicePart(name: "Valvoline Synthetic 5w_20", id: "Valvoline Synthetic 5w_20", price: 4.46),
         "Valvoline Synthetic 5w_30": ServicePart(name: "Valvoline Synthetic 5w_30", id: "Valvoline Synthetic 5w_30", price: 4.46),
         "Valvoline Synthetic 5w_30 EURO": ServicePart(name: "Valvoline Synthetic 5w_30 EURO", id: "Valvoline Synthetic 5w_30 EURO", price: 6.38),
-//        "Starting System Donation": ServicePart(name: "", id: <#T##String#>, price: <#T##Double#>)
+        "Starting System Donation": ServicePart(name: "Starting System Donation", id: "Starting System Donation", price: 25),
+        "Starting System Test": ServicePart(name: "Starting System Test", id: "Starting System Test", price: 0),
+        "Quick Strut Installation": ServicePart(name: "Quick Strut Installation", id: "Quick Strut Installation", price: 0),
+        "Replace Springs": ServicePart(name: "Replace Springs", id: "Replace Springs", price: 0),
+        "Replace Strut-Shock": ServicePart(name: "Replace Strut-Shock", id: "Replace Strut-Shock", price: 0),
+//        "Replace Sway Bar  Endlinks": ServicePart(name: "Replace Strut-Shock", id: <#T##String#>, price: <#T##Double#>)
     ]
     @State var showAlert: Bool = false
     @State private var searchText: String = ""
