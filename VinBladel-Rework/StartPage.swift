@@ -19,6 +19,7 @@ struct StartPage: View {
     @State var isPressed4 = false
     @State var isPressed5 = false
     @State var isPressed6 = false
+    @State private var selectedClient: Client = Client(id: "temp", name: "Temp Client", contactInfo: ["lol": "lol"])
     var body: some View {
         NavigationStack{
             HStack{
@@ -37,7 +38,7 @@ struct StartPage: View {
                             .onEnded { _ in isPressed2 = false }
                     )
                    
-                    NavigationLink(destination: InProgress()) {
+                    NavigationLink(destination: InProgress(customer: $selectedClient)) {
                         Text("In Progress")
                             .foregroundStyle(.black)
                             .frame(width: 100, height: 25)
