@@ -1,8 +1,7 @@
 import SwiftUI
 import UIKit
 
-#if canImport(UIKit)
-@available(iOS 13.0, *)
+
 public struct PDFGenerator {
     /// Generates a PDF file from the given SwiftUI view.
     /// - Parameter content: The SwiftUI view to render as PDF.
@@ -41,4 +40,4 @@ public struct PDFGenerator {
         }
     }
 }
-#endif
+

@@ -325,15 +325,19 @@ public struct InvoiceTemplateView: View {
     }
 
     private var notesSection: some View {
+        
         VStack(alignment: .leading, spacing: 6) {
             Divider().foregroundStyle(.quaternary)
             Text("Notes")
                 .font(.footnote.weight(.semibold))
                 .foregroundStyle(accentColor)
-            Text(viewModel.notes ?? "")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
+            TextField("Enter notes", text: Binding(
+                get: { viewModel.notes ?? "" },
+                set: { viewModel.notes = $0.isEmpty ? nil : $0 }
+            ))
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            .textFieldStyle(.roundedBorder)
         }
     }
 
