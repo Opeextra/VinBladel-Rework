@@ -10,6 +10,7 @@ import Vision
 
 struct AddVINView: View{
     @Binding var scannedVIN: String?
+    @State var tempScannedVIN: String?
     @State var showScanner: Bool = false
     @State var scannerAvailable: Bool = DataScannerViewController.isSupported && DataScannerViewController.isAvailable
     // if device can use camera, it will add true to the var, otherwise false
