@@ -15,24 +15,18 @@ struct InProgress: View {
     @State private var saveMessage: String? = nil
 
     var body: some View {
-        NavigationStack{
-            VStack(spacing: 16) {
-                Button{
-                    addData()
-                } label: {
-                    Text(isSaving ? "Saving..." : "Add Stuff")
-                }
-                .disabled(isSaving)
+        VStack(spacing: 16) {
+            Button{
+                addData()
+            } label: {
+                Text(isSaving ? "Saving..." : "Add Stuff")
+            }
+            .disabled(isSaving)
 
-                if let saveMessage = saveMessage {
-                    Text(saveMessage)
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
-
-                List{
-                    NavigationLink("Test", destination: PartsandServices())
-                }
+            if let saveMessage = saveMessage {
+                Text(saveMessage)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
             }
         }
     }

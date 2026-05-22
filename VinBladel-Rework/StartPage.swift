@@ -19,7 +19,7 @@ struct StartPage: View {
     @State var isPressed4 = false
     @State var isPressed5 = false
     @State var isPressed6 = false
-    @State private var selectedClient: Client = Client(id: "temp", name: "Temp Client", contactInfo: ["lol": "lol"])
+    @State private var selectedClient: Client = Client(id: "temp", name: "Temp Client", contactInfo: ["lol": "lol"], cars: [:])
     var body: some View {
         NavigationStack{
             HStack{
@@ -51,7 +51,21 @@ struct StartPage: View {
                             .onChanged { _ in isPressed3 = true }
                             .onEnded { _ in isPressed3 = false }
                     )
-                    
+
+                    NavigationLink(destination: ClientDetailsView()) {
+                        Text("Clients")
+                            .foregroundStyle(.black)
+                            .frame(width: 100, height: 25)
+                            .background(RoundedRectangle(cornerRadius: 10).foregroundStyle(.orange))
+                            .scaleEffect(isPressed1 ? 0.92 : 1.0)
+                            .animation(.spring(response: 0.25, dampingFraction: 0.6, blendDuration: 0.2), value: isPressed1)
+                    }
+                    .simultaneousGesture(
+                        DragGesture(minimumDistance: 0)
+                            .onChanged { _ in isPressed1 = true }
+                            .onEnded { _ in isPressed1 = false }
+                    )
+
                 }
                 VStack {
                     NavigationLink(destination: Complete()) {

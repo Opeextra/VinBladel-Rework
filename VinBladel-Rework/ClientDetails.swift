@@ -6,83 +6,94 @@
 //
 import SwiftUI
 
-struct Client: Identifiable{
+struct Client: Identifiable {
     var id: String
     let name: String
     let contactInfo: [String: String]
+    let cars: [String: String]
 }
+
 struct ClientDetailsView: View {
-    @State var clients: [Client] = []
+    @State private var store = CustomerStore()
     @State var showAlert: Bool = false
     var body: some View {
-        NavigationStack{
-            NavigationLink(destination: AddClient(clients: $clients), label: {
+        NavigationStack {
+            NavigationLink(destination: AddClient(store: store)) {
                 Text("Add Client")
-            })
+            }
             Text("Previous Clients")
-            ScrollView{
-                ForEach(clients, id: \.id) { client in
-                    NavigationLink(destination: ClientView(id: "\(client.name)", name: "\(client.name)", contactInfo: client.contactInfo)) {
+            ScrollView {
+                ForEach(store.clients) { client in
+                    NavigationLink(destination: ClientView(client: client)) {
                         Text(client.name)
                     }
                 }
             }
         }
+        .onAppear { store.startListening() }
     }
 }
+
 struct AddClient: View {
-    @Binding var clients: [Client]
+    let store: CustomerStore
+    @Environment(\.dismiss) private var dismiss
     @State var name: String = ""
     @State var contactInfo: [String: String] = [:]
     @State var contact: String = ""
     @State var contactData: String = ""
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             TextField("Name", text: $name)
-            NavigationLink(destination: ContactInfoView(contactData: $contactData, contact: $contact, contactInfo: $contactInfo, clients: $clients), label: {Text("Add contact Info")})
-            Button("Add Client"){
-                clients.append(Client(id: name, name:  name, contactInfo: contactInfo))
+            NavigationLink(destination: ContactInfoView(
+                contactData: $contactData,
+                contact: $contact,
+                contactInfo: $contactInfo
+            )) {
+                Text("Add contact Info")
+            }
+            Button("Add Client") {
+                store.addCustomer(name: name, contactInfo: contactInfo)
+                dismiss()
             }
             .padding()
         }
     }
 }
+
 struct ContactInfoView: View {
     @Binding var contactData: String
     @Binding var contact: String
     @Binding var contactInfo: [String: String]
-    @Binding var clients: [Client]
-    
+
     var body: some View {
-        VStack{
+        VStack {
             TextField("Enter info name. ex: Phone number, email", text: $contact)
             TextField("Enter info data. ex: +1 (847) 732-3491", text: $contactData)
         }
-        Button("Add"){
+        Button("Add") {
             contactInfo[contact] = contactData
             contact = ""
             contactData = ""
         }
     }
 }
+
 struct ClientView: View {
-    let id: String
-    let name: String
-    let contactInfo: [String: String]
-    @State var contact: String = ""
+    let client: Client
     var body: some View {
-        VStack{
-            Text("Name: \(name)")
-            Text("Contact Info: \(contact)")
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Name: \(client.name)").font(.headline)
+
+            Text("Contact Info").font(.subheadline).bold()
+            ForEach(client.contactInfo.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                Text("\(key): \(value)")
+            }
+
+            Text("Cars").font(.subheadline).bold()
+            ForEach(client.cars.sorted(by: { $0.key < $1.key }), id: \.key) { nickname, vin in
+                Text("\(nickname): \(vin)")
+            }
         }
         .padding()
-        .onAppear(){
-            load()
-        }
-    }
-    func load(){
-        for (key, value) in contactInfo{
-            contact += "\(key): \(value)\n"
-        }
     }
 }

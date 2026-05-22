@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseCore
+import FirebaseDatabase
 
 
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -27,6 +28,9 @@ struct VinBladel_ReworkApp: App {
             Group {
                 if launchScreen == true {
                     StartPage()
+                        .onAppear(){
+                            Database.database().reference().child(".info/connected").observe(.value) { _ in }
+                        }
                         .transition(.slide)
                 } else {
                     loadingAnimation()
