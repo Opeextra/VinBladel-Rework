@@ -45,7 +45,7 @@ final class CustomerStore {
         ])
     }
 
-    func addCar(customer: String, nickname: String, vin: String) {
-        ref.child(customer).child("Cars").child(nickname).setValue(vin)
+    func addCar(customer: String, carName: String, vin: String) {
+        ref.child(customer).child("Cars").child(carName).setValue(vin)
     }
 }
